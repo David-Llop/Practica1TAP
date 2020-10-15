@@ -18,9 +18,9 @@
     + funct `void sendMail(Message mail)`
     + funct `Message[] getMail(User user)`
     
-* InMemoryMailStore: Guarda els correus en memòria, estructura missatges ordenats per destinatari
+InMemoryMailStore: Guarda els correus en memòria, estructura missatges ordenats per destinatari
 
-* OnFileMailStore: Missatges al final d'un arxiu, 1 missatge/línia, camps separats per `;`
+OnFileMailStore: Missatges al final d'un arxiu, 1 missatge/línia, camps separats per `;`
 
 * Mailbox
     + User
