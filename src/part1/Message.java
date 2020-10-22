@@ -5,7 +5,6 @@ public class Message {
     }
 
     public String getFrom() {
-
         return null;
     }
 
