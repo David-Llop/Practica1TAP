@@ -3,19 +3,18 @@ package part1;
 import java.util.Date;
 
 public class Message {
-//   * part1.Message
-//   + de: part1.User envia (username)
-//   + per: part1.User rep (username)
 
     private String text, title, from, to;
     private Date maildate; //Date(int year, int month, int date, int hrs, int min)
+    private int numberWords;
 
-    public Message(String text, String title, String from, String to, Date maildate) {
+    public Message(String text, String title, String from, String to, Date maildate, int numberWords) {
         this.text = text;
         this.title = title;
         this.from = from;
         this.to = to;
         this.maildate = maildate;
+        this.numberWords = numberWords;
     }
 
     public String getText() {
@@ -38,9 +37,7 @@ public class Message {
         return from;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
+    public void setFrom(String from) { this.from = from; }
 
     public String getTo() {
         return to;
@@ -57,4 +54,8 @@ public class Message {
     public void setMaildate(Date maildate) {
         this.maildate = maildate;
     }
+
+    public int getNumberWords() { return numberWords; }
+
+    public void setNumberWords(int numberWords) { this.numberWords = numberWords; }
 }
