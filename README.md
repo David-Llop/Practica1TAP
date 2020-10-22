@@ -14,24 +14,24 @@
     + data i hora creació
 
 * part1.MailStore
-    + funct `void sendMail(part1.Message mail)`
-    + funct `part1.Message[] getMail(part1.User user)`
+    + funct `void sendMail(Message mail)`
+    + funct `Message[] getMail(User user)`
     + **part1.InMemoryMailStore**: Guarda els correus en memòria, estructura missatges ordenats per destinatari
     + **part1.OnFileMailStore**: Missatges al final d'un arxiu, 1 missatge/línia, camps separats per `;`
 
 * Mailbox
-    + part1.User
+    + User
     + llista Messages rebuts
-    + referència part1.MailStore
+    + referència MailStore
     + funct `void updateMail()` actualitza llista de missatges rebuts ordre segons part1.MailStore -> ordenar de nou a vell (Streams)
     + funct `part1.Message[] listMail()` llista de missatges rebuts actual
-    + funct `void sendMail(part1.User desti, String subj, String text)` envia missatge a part1.MailStore
+    + funct `void sendMail(User desti, String subj, String text)` envia missatge a part1.MailStore
     + funct `part1.Message[] listMailOrder(Order order)` llista de missatges ordenada segons el valor `order` (Streams)
     + Ha de ser iterable pels missatges
 
 * part1.MailSystem
-    + part1.MailStore
-    + part1.User[]
+    + MailStore
+    + User[]
     + Mailbox[]
     + funcions amb Streams (?)
     + funct `Mailbox newUser(part1.User user)`
