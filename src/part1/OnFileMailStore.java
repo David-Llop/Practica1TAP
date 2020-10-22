@@ -36,6 +36,7 @@ public class OnFileMailStore implements MailStore{
             writer.append(mail.getFrom() + ";" + mail.getTo() + ";"
                     + mail.getSubject() + ";" + mail.getText() + "\n");
             writer.close();
+            MailSystem.addMessage(mail);
         } catch (IOException e) {
             e.printStackTrace();
         }
