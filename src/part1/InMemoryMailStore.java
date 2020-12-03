@@ -17,6 +17,7 @@ public class InMemoryMailStore implements MailStore{
      */
     @Override
     public Message[] getMail(User user) {
+
         return new Message[0];
     }
 }
