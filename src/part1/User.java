@@ -3,15 +3,9 @@ package part1;
 import  java.lang.Object;
 import java.util.Date;
 
-public class User {
+public class User{
     private String username, name;
-    private Date birthdate; //Date(int year, int month, int date)
-
-    public User(String username, String name, Date birthdate) {
-        this.username = username;
-        this.name = name;
-        this.birthdate = birthdate;
-    }
+    private Date birthdate;
 
     public String getUsername() {
         return username;
