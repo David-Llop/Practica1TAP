@@ -13,5 +13,5 @@ public interface MailStore {
      * @param user {@link User} for whom the mails are intended
      * @return {@link Message} [] of mails intended for the given user
      */
-    Message[] getMail(User user);
+    Message[] getMail(String user);
 }
