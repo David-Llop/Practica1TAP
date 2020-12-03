@@ -1,6 +1,8 @@
 package part1;
 
 public class InMemoryMailStore implements MailStore{
+
+
     /**
      * Function that sends a given Message
      * @param mail {@link Message} to be send
@@ -16,7 +18,7 @@ public class InMemoryMailStore implements MailStore{
      * @return {@link Message} [] of mails intended for the given user
      */
     @Override
-    public Message[] getMail(User user) {
+    public Message[] getMail(String user) {
 
         return new Message[0];
     }
