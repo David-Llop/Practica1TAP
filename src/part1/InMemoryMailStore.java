@@ -2,6 +2,9 @@ package part1;
 
 public class InMemoryMailStore implements MailStore{
 
+    /* TODO: taula[usuaris][missatges] on cada usuari té una llista amb els missatges que
+        van destinats a ell?? --> List<List<Message>>
+     */
 
     /**
      * Function that sends a given Message
