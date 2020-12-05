@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 public class OnFileMailStore implements MailStore{
 
     private final File file;
-    private final Pattern regexMessage = Pattern.compile("(\\w+);(\\w+);([\\w\\h]+);([\\w\\h]+)\n");
 
     /**
      * @param file {@link File} from where to retrieve and send {@link Message}
@@ -36,8 +35,7 @@ public class OnFileMailStore implements MailStore{
     public void sendMail(Message mail) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.append(mail.getFrom() + ";" + mail.getTo() + ";"
-                    + mail.getSubject() + ";" + mail.getText() + "\n");
+            writer.append(mail.toString());
             writer.close();
             //MailSystem.addMessage(mail);
         } catch (IOException e) {
@@ -58,15 +56,9 @@ public class OnFileMailStore implements MailStore{
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
-                try {
-                    Matcher matcher = regexMessage.matcher(scanner.nextLine());
-                    Message message = new Message(matcher.group(1), matcher.group(2),
-                            matcher.group(3), matcher.group(4));
-                    System.out.println(message);
-                    aux.add(message);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
+                String[] fields = scanner.nextLine().split(";");
+                if (fields.length == 4){
+                    aux.add(new Message(fields[0],fields[1],fields[2],fields[3]));
                 }
             }
 
