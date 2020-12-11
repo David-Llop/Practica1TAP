@@ -49,4 +49,8 @@ public class Message {
     public String toString(){
         return from + ";" + to + ";" + subject + ";" + text +";" + formatter.format(sendDate) + "\n";
     }
+
+    public int getWordCount(){
+        return text.split(" ").length;
+    }
 }
