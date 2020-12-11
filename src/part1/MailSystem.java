@@ -42,6 +42,6 @@ public class MailSystem {
     }
 
     public Map<String, List<Message>> groupBySubject(){
-        return getAllMessages().stream().collect(Collectors.groupingBy(w -> w.getSubject()));
+        return getAllMessages().stream().collect(Collectors.groupingBy(Message::getSubject));
     }
 }
