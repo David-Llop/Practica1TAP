@@ -1,7 +1,6 @@
 package part1;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Message {

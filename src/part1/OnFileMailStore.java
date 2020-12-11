@@ -3,28 +3,23 @@ package part1;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class OnFileMailStore implements MailStore{
 
-    private final File file;
+    private File file;
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    private static OnFileMailStore mailStore = new OnFileMailStore();
 
-    /**
-     * @param file {@link File} from where to retrieve and send {@link Message}
-     */
-    public OnFileMailStore(File file) {
-        this.file = file;
+    private OnFileMailStore(){
+        file = new File("MailStore.txt");
     }
 
-    /**
-     * @param filepath path to the file from where to retrieve and send {@link Message}
-     */
-    public OnFileMailStore(String filepath) {
-        this.file = new File(filepath);
+    public void setFile(String filepath){
+        file = new File(filepath);
     }
 
     /**
@@ -37,7 +32,6 @@ public class OnFileMailStore implements MailStore{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.append(mail.toString());
             writer.close();
-            //MailSystem.addMessage(mail);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,5 +61,10 @@ public class OnFileMailStore implements MailStore{
             aux.add(null);
         }
         return aux.stream().filter(t->t.getTo().equals(user)).toArray(Message[] :: new);
+    }
+
+
+    public static MailStore getInstance() {
+        return mailStore;
     }
 }

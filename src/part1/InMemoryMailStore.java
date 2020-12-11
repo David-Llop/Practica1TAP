@@ -1,15 +1,16 @@
 package part1;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
-import java.util.List;
 
 public class InMemoryMailStore implements MailStore{
 
-    Hashtable<String, ArrayList<Message>> mailHashTable = new Hashtable<>();
+    private Hashtable<String, ArrayList<Message>> mailHashTable = new Hashtable<>();
+    private static InMemoryMailStore mailStore = new InMemoryMailStore();
+
+    private InMemoryMailStore(){
+
+    }
 
     /**
      * Function that sends a given Message
@@ -36,5 +37,9 @@ public class InMemoryMailStore implements MailStore{
     @Override
     public Message[] getMail(String user) {
         return mailHashTable.get(user).toArray(new Message[0]);
+    }
+
+    public static MailStore getInstance() {
+        return mailStore;
     }
 }
