@@ -13,4 +13,19 @@ public class MailSystem {
         return new MailBox(mailStore, user);
     }
 
+    public int getTotalMessages(){
+        int count = 0;
+        for (User user: usersList) {
+            count+=mailStore.getMail(user.getUsername()).length;
+        }
+        return count;
+    }
+
+    public float getAverageUserMessages(){
+        return getTotalMessages()/usersList.size();
+    }
+
+    public ArrayList<User> getUsersList() {
+        return usersList;
+    }
 }
