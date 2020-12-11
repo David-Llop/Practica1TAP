@@ -1,10 +1,9 @@
 package part1;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -12,7 +11,7 @@ import java.util.stream.Stream;
 public class OnFileMailStore implements MailStore{
 
     private final File file;
-    private final Pattern regexMessage = Pattern.compile("(\\w+);(\\w+);([\\w\\h]+);([\\w\\h]+)\n");
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     /**
      * @param file {@link File} from where to retrieve and send {@link Message}
@@ -36,8 +35,7 @@ public class OnFileMailStore implements MailStore{
     public void sendMail(Message mail) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.append(mail.getFrom() + ";" + mail.getTo() + ";"
-                    + mail.getSubject() + ";" + mail.getText() + "\n");
+            writer.append(mail.toString());
             writer.close();
             //MailSystem.addMessage(mail);
         } catch (IOException e) {
@@ -58,19 +56,13 @@ public class OnFileMailStore implements MailStore{
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
-                try {
-                    Matcher matcher = regexMessage.matcher(scanner.nextLine());
-                    Message message = new Message(matcher.group(1), matcher.group(2),
-                            matcher.group(3), matcher.group(4));
-                    System.out.println(message);
-                    aux.add(message);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
+                String[] fields = scanner.nextLine().split(";");
+                if (fields.length == 5){
+                    aux.add(new Message(fields[0],fields[1],fields[2],fields[3], formatter.parse(fields[4])));
                 }
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
             aux.add(null);
         }

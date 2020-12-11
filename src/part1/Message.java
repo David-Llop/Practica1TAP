@@ -1,42 +1,53 @@
 package part1;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Message {
-    private String text, from, to, subject;
-    private Date date;
-    private int nWords;
 
-    public Message(String text, String from, String to, String subject, Date date, int nWords) {
-        this.text = text;
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+
+    private String from, to, subject, text;
+    private Date sendDate;
+
+    public Message(String from, String to, String subject, String text) {
+        this.sendDate = new Date();
         this.from = from;
         this.to = to;
         this.subject = subject;
-        this.date = date;
-        this.nWords = nWords;
+        this.text = text;
     }
 
-    public void setText(String text) { this.text = text; }
+    public Message(String from, String to, String subject, String text, Date sendDate) {
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.text = text;
+        this.sendDate = sendDate;
+    }
 
-    public void setFrom(String from) { this.from = from; }
+    public Date getSendDate() {
+        return sendDate;
+    }
 
-    public void setTo(String to) {this.to = to; }
+    public String getFrom() {
+        return from;
+    }
 
-    public void setSubject(String subject) { this.subject = subject; }
+    public String getTo() {
+        return to;
+    }
 
-    public Date getDate() { return date; }
+    public String getSubject() {
+        return subject;
+    }
 
-    public void setDate(Date date) { this.date = date; }
+    public String getText() {
+        return text;
+    }
 
-    public int getnWords() { return nWords; }
-
-    public void setnWords(int nWords) { this.nWords = nWords; }
-
-    public String getFrom() { return from; }
-
-    public String getTo() { return to; }
-
-    public String getSubject() { return subject; }
-
-    public String getText() { return text; }
+    public String toString(){
+        return from + ";" + to + ";" + subject + ";" + text +";" + formatter.format(sendDate) + "\n";
+    }
 }
