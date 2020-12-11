@@ -14,4 +14,5 @@ public interface MailStore {
      * @return {@link Message} [] of mails intended for the given user
      */
     Message[] getMail(String user);
+
 }
