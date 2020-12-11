@@ -1,10 +1,9 @@
 package part1;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -12,6 +11,7 @@ import java.util.stream.Stream;
 public class OnFileMailStore implements MailStore{
 
     private final File file;
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     /**
      * @param file {@link File} from where to retrieve and send {@link Message}
@@ -57,12 +57,12 @@ public class OnFileMailStore implements MailStore{
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
                 String[] fields = scanner.nextLine().split(";");
-                if (fields.length == 4){
-                    aux.add(new Message(fields[0],fields[1],fields[2],fields[3]));
+                if (fields.length == 5){
+                    aux.add(new Message(fields[0],fields[1],fields[2],fields[3], formatter.parse(fields[4])));
                 }
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
             aux.add(null);
         }

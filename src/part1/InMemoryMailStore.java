@@ -1,16 +1,15 @@
 package part1;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 
 public class InMemoryMailStore implements MailStore{
 
-    /* TODO: taula[usuaris][missatges] on cada usuari té una llista amb els missatges que
-        van destinats a ell?? --> List<List<Message>>
-     */
-
-    ArrayList<ArrayList<Message>> mailsTable = new ArrayList<>();
+    Hashtable<String, ArrayList<Message>> mailHashTable = new Hashtable<>();
 
     /**
      * Function that sends a given Message
@@ -18,18 +17,15 @@ public class InMemoryMailStore implements MailStore{
      */
     @Override
     public void sendMail(Message mail) {
-        for (ArrayList<Message> userMails:
-             mailsTable) {
-            Message user = userMails.get(0);
-            if (user.getTo().equals(mail.getTo())){
-                userMails.add(mail);
-                return;
-            }
+
+        if (mailHashTable.get(mail.getTo()) == null){
+            ArrayList<Message> aux = new ArrayList<>();
+            aux.add(mail);
+            mailHashTable.put(mail.getTo(), aux);
         }
-        mailsTable.add(new ArrayList<>());
-        ArrayList<Message> userMails = mailsTable.get(mailsTable.size()-1);
-        userMails.add(new Message(null, mail.getTo(), null, null));
-        userMails.add(mail);
+        else {
+            mailHashTable.get(mail.getTo()).add(mail);
+        }
     }
 
     /**
@@ -39,17 +35,6 @@ public class InMemoryMailStore implements MailStore{
      */
     @Override
     public Message[] getMail(String user) {
-
-        for (ArrayList <Message> userMails :
-                mailsTable) {
-            Message user1 = userMails.get(0);
-            if (user1.getTo().equals(user)){
-                ArrayList<Message> mails = (ArrayList<Message>) userMails.clone();
-                mails.remove(0);
-
-                return mails.toArray(Message[]::new);
-            }
-        }
-        return null;
+        return mailHashTable.get(user).toArray(new Message[0]);
     }
 }
