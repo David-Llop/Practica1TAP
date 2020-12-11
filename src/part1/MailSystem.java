@@ -1,6 +1,10 @@
 package part1;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MailSystem {
     MailStore mailStore;
@@ -27,5 +31,17 @@ public class MailSystem {
 
     public ArrayList<User> getUsersList() {
         return usersList;
+    }
+
+    public ArrayList<Message> getAllMessages(){
+        ArrayList<Message> messages = new ArrayList<>();
+        for (User user : usersList) {
+            Collections.addAll(messages, mailStore.getMail(user.getUsername()));
+        }
+        return messages;
+    }
+
+    public Map<String, List<Message>> groupBySubject(){
+        return getAllMessages().stream().collect(Collectors.groupingBy(Message::getSubject));
     }
 }
