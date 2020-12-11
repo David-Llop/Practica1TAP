@@ -21,7 +21,7 @@ public class MailBox implements Iterable<Message> {
         return messages.iterator();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         User user = new User();
         user.setUsername("asdfa");
         MailBox mailBox = new MailBox(OnFileMailStore.getInstance(), user);
@@ -32,7 +32,7 @@ public class MailBox implements Iterable<Message> {
         mailBox.messages = Arrays.asList(mailBox.mailStore.getMail(user.getUsername()));
         mailBox.forEach(System.out::println);
         //System.out.println(mailBox.messages);
-    }
+    }*/
 
 
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 public class User{
     private String username, name;
     private Date birthdate;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    public static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     public User(String username, String name, Date birthdate) {
         this.username = username;
