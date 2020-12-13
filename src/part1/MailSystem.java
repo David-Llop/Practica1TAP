@@ -64,4 +64,16 @@ public class MailSystem {
         }
         return messagesBornBefore;
     }
+
+    public ArrayList<Message> contains(String word){
+        ArrayList<Message> result = new ArrayList<>();
+        Collections.addAll(result, getAllMessages().stream().filter(t->t.getSubject().contains(word) || t.getText().contains(word)).toArray(Message[]::new));
+        return result;
+    }
+
+    public ArrayList<Message> lessThan(int max_Words){
+        ArrayList<Message> result = new ArrayList<>();
+        Collections.addAll(result, getAllMessages().stream().filter(t->t.getWordCount() < max_Words).toArray(Message[]::new));
+        return result;
+    }
 }
