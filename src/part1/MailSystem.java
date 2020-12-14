@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class MailSystem {
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private MailStore mailStore;
-    private ArrayList<User> usersList;
+    private ArrayList<User> usersList = new ArrayList<>();
     private static MailSystem mailSystem = new MailSystem();
 
     private MailSystem(){}

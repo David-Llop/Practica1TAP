@@ -31,4 +31,8 @@ public class MailBox implements Iterable<Message> {
     public void sendMail(Message mail){
         mailStore.sendMail(mail);
     }
+
+    public void sort(){
+
+    }
 }

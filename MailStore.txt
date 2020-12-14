@@ -1,0 +1,8 @@
+AnnaJu128;Llop00;Cafe;Hola! Vols anar a fer un cafe aquesta tarda??;14-12-2020 11:03:33
+Llop00;AnnaJu128;Cafe;Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?;14-12-2020 11:03:33
+AnnaJu128;Llop00;Cafe;Vale a les 5! pero, podriem anar al coffebook que hi han donuts :P;14-12-2020 11:03:33
+Llop00;AnnaJu128;Cafe;Bueno vale, a les 5 al CoffeBook.;14-12-2020 11:03:33
+AnnaJu128;Llop00;Cafe;Hola! Vols anar a fer un cafe aquesta tarda??;14-12-2020 11:04:34
+Llop00;AnnaJu128;Cafe;Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?;14-12-2020 11:04:34
+AnnaJu128;Llop00;Cafe;Vale a les 5! pero, podriem anar al coffebook que hi han donuts :P;14-12-2020 11:04:34
+Llop00;AnnaJu128;Cafe;Bueno vale, a les 5 al CoffeBook.;14-12-2020 11:04:34

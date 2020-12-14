@@ -27,5 +27,8 @@ public class Test
         Message num4 = new Message("Llop00", "AnnaJu128", "Cafe", "Bueno vale, a les 5 al CoffeBook.");
         llopMailbox.sendMail(num4);
         mailStore.getMail("AnnaJu128");
+        annajuMailbox.forEach(System.out::println);
+        System.out.println("\n\n\n");
+        llopMailbox.forEach(System.out::println);
     }
 }
