@@ -1,7 +1,6 @@
 package part1;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class MailBox implements Iterable<Message> {
 

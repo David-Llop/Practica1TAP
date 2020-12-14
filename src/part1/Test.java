@@ -1,7 +1,7 @@
 package part1;
 
 import java.text.ParseException;
-import java.util.Date;
+
 // MAIN
 public class Test
 {
