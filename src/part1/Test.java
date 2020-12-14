@@ -13,7 +13,7 @@ public class Test
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
         MailBox llopMailbox = mailSystem.addUser(Llop00);
-        MailBox annajuMailbox = mailSystem.addUser(AnnaJu128);  mailSystem.addUser(Llop00);
+        MailBox annajuMailbox = mailSystem.addUser(AnnaJu128);
         Message num1 = new Message("AnnaJu128", "Llop00", "Cafe", "Hola! Vols anar a fer un cafe aquesta tarda??");
         MailStore mailStore = mailSystem.getMailStore();
         annajuMailbox.sendMail(num1);
@@ -29,6 +29,14 @@ public class Test
         mailStore.getMail("AnnaJu128");
         annajuMailbox.forEach(System.out::println);
         System.out.println("\n\n\n");
-        llopMailbox.forEach(System.out::println);
+        annajuMailbox.update();
+        System.out.println("Default");
+        annajuMailbox.forEach(System.out::println);
+        System.out.println("New First");
+        annajuMailbox.sortByDate(true);
+        annajuMailbox.forEach(System.out::println);
+        System.out.println("Old first");
+        annajuMailbox.sortByDate(false);
+        annajuMailbox.forEach(System.out::println);
     }
 }

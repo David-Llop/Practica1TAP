@@ -32,7 +32,10 @@ public class MailBox implements Iterable<Message> {
         mailStore.sendMail(mail);
     }
 
-    public void sort(){
-
+    public void sortByDate(boolean newFirst){
+        if (newFirst)
+            messages.sort(Comparator.comparing(x->x.getSendDate(), Comparator.reverseOrder()));
+        else
+            messages.sort(Comparator.comparing(x->x.getSendDate()));
     }
 }
