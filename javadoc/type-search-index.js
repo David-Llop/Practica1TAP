@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"part1","l":"InMemoryMailStore"},{"p":"part1","l":"MailBox"},{"p":"part1","l":"MailStore"},{"p":"part1","l":"MailSystem"},{"p":"part1","l":"Message"},{"p":"part1","l":"OnFileMailStore"},{"p":"part1","l":"User"}]
