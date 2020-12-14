@@ -5,14 +5,14 @@ import java.util.*;
 public class MailBox implements Iterable<Message> {
 
     private MailStore mailStore;
-    private List<Message> messages;
+    private ArrayList<Message> messages = new ArrayList<>();
     private User user;
     private MailSystem mailSystem;
 
     public MailBox(MailStore mailStore, User user) {
         this.mailStore = mailStore;
         this.user = user;
-        messages= Arrays.asList(mailStore.getMail(user.getUsername()));
+        //Collections.addAll(messages, mailStore.getMail(user.getUsername()));
         mailSystem = MailSystem.getMailSystem();
     }
 
@@ -22,11 +22,11 @@ public class MailBox implements Iterable<Message> {
     }
 
     public void update(){
-        messages = Arrays.asList(mailStore.getMail(user.getUsername()));
+        Collections.addAll(messages, mailStore.getMail(user.getUsername()));
     }
 
     public ArrayList<Message> getMailList(){
-        return (ArrayList<Message>) messages;
+        return messages;
     }
 
     public void sendMail(Message mail){

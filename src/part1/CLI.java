@@ -67,7 +67,7 @@ public class CLI {
                     // Do send
                     break;
                 case "filter":
-                    // Do filter
+                    filter(command);
                     break;
                 case "update":
                     // Do update
@@ -79,7 +79,7 @@ public class CLI {
                     // Do sort
                     break;
                 default:
-                    System.out.println("Not logged as user, please login as user to use the "+command[0]+" command");
+                    System.out.println("Not in admin mode, please close the current user to use the "+ command[0]+" command");
             }
         }
         else {
@@ -94,12 +94,13 @@ public class CLI {
                     logged = login(command);
                     break;
                 default:
-                    System.out.println("Not in admin mode, please close the current user to use the "+ command[0]+" command");
+                    System.out.println("Not logged as user, please login as user to use the "+command[0]+" command");
             }
         }
     }
 
     private void filter(String[] command) {
+        System.out.println("asdhjfjkasdhfjhasd");
         if (command.length>5){
             System.out.println("Too many arguments");
             return;
@@ -142,7 +143,7 @@ public class CLI {
         System.out.println(result);
     }
 
-    private boolean login(String @NotNull [] command) {
+    private boolean login(String[] command) {
         if (command.length > 2) {
             System.out.println("Too many arguments");
             return false;
