@@ -7,13 +7,11 @@ public class User{
     private String username, name;
     private Date birthdate;
     public static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-    private MailStore mailStore;
 
-    public User(String username, String name, Date birthdate, MailStore mailStore) {
+    public User(String username, String name, Date birthdat) {
         this.username = username;
         this.name = name;
         this.birthdate = birthdate;
-        this.mailStore = mailStore;
     }
 
     public String getUsername() {
@@ -40,7 +38,4 @@ public class User{
         this.birthdate = birthdate;
     }
 
-    public void sendMail(Message mail){
-        mailStore.sendMail(mail);
-    }
 }

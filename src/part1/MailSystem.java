@@ -95,10 +95,16 @@ public class MailSystem {
      * @param name user's real name
      * @return count of words in the messages send by the user
      */
+    // FIXME: no treballa amb nom real
     public int wordsByName(String name){
         int count=0;
-        for (Message message: (ArrayList<Message>) getAllMessages().stream().filter(t->t.getFrom().equals(name))) {
-            count+=message.getWordCount();
+        ArrayList<String> usernames = new ArrayList<>();
+        for (User user :
+                usersList) {
+            if (user.getName().equals(name))
+                for (Message message: (ArrayList<Message>) getAllMessages().stream().filter(t->t.getFrom().equals(user.getUsername()))) {
+                    count+=message.getWordCount();
+                }
         }
         return count;
     }
