@@ -8,11 +8,13 @@ public class MailBox implements Iterable<Message> {
     private MailStore mailStore;
     private List<Message> messages;
     private User user;
+    private MailSystem mailSystem;
 
-    public MailBox(MailStore mailStore, User user) {
+    public MailBox(MailStore mailStore, User user, MailSystem mailSystem) {
         this.mailStore = mailStore;
         this.user = user;
         messages= Arrays.asList(mailStore.getMail(user.getUsername()));
+        this.mailSystem = mailSystem;
     }
 
     @Override
@@ -38,4 +40,13 @@ public class MailBox implements Iterable<Message> {
         else
             messages.sort(Comparator.comparing(x->x.getSendDate()));
     }
+
+    public ArrayList<Message> contains(String word){
+        return mailSystem.contains(word, (ArrayList<Message>) messages);
+    }
+
+    public ArrayList<Message> lessThan(int max_Words){
+        return mailSystem.lessThan(max_Words, (ArrayList<Message>) messages);
+    }
+
 }
