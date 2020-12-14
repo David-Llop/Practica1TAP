@@ -38,7 +38,7 @@ public class MailSystem {
         if (!usersList.contains(user)){
             usersList.add(user);
         }
-        return new MailBox(mailStore, user, this);
+        return new MailBox(mailStore, user);
     }
 
     /**

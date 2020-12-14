@@ -10,11 +10,11 @@ public class MailBox implements Iterable<Message> {
     private User user;
     private MailSystem mailSystem;
 
-    public MailBox(MailStore mailStore, User user, MailSystem mailSystem) {
+    public MailBox(MailStore mailStore, User user) {
         this.mailStore = mailStore;
         this.user = user;
         messages= Arrays.asList(mailStore.getMail(user.getUsername()));
-        this.mailSystem = mailSystem;
+        mailSystem = MailSystem.getMailSystem();
     }
 
     @Override
