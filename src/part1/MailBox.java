@@ -41,11 +41,11 @@ public class MailBox implements Iterable<Message> {
     }
 
     public ArrayList<Message> contains(String word){
-        return mailSystem.contains(word, (ArrayList<Message>) messages);
+        return Filtrate.contains(word, (ArrayList<Message>) messages);
     }
 
     public ArrayList<Message> lessThan(int max_Words){
-        return mailSystem.lessThan(max_Words, (ArrayList<Message>) messages);
+        return Filtrate.lessThan(max_Words, (ArrayList<Message>) messages);
     }
 
 }

@@ -29,6 +29,15 @@ public class MailSystem {
         this.mailStore = mailStore;
     }
 
+    public User findUser(String username){
+        for (User user :
+                usersList) {
+            if (user.getUsername().equals(username))
+                return user;
+        }
+        return null;
+    }
+
     /**
      * Function to add a user
      * @param user user to add or login
@@ -95,7 +104,6 @@ public class MailSystem {
      * @param name user's real name
      * @return count of words in the messages send by the user
      */
-    // FIXME: no treballa amb nom real
     public int wordsByName(String name){
         int count=0;
         ArrayList<String> usernames = new ArrayList<>();
@@ -130,47 +138,11 @@ public class MailSystem {
     /**
      * Function that returns the list of messages containing the given word in the subject or the body
      * @param word Word the message has to contain
-     * @param messages List of messages from where to filter, if {@code null}, filters all the messages in the system
-     * @return list of messages containing the given word in the subject or the body
-     */
-    public ArrayList<Message> contains(String word, ArrayList<Message> messages){
-        ArrayList<Message> result = new ArrayList<>();
-        ArrayList<Message> aux;
-        if (messages == null)
-            aux = getAllMessages();
-        else
-            aux = messages;
-        Collections.addAll(result, aux.stream().filter(t->t.getSubject().contains(word) || t.getText().contains(word)).toArray(Message[]::new));
-        return result;
-    }
-
-    /**
-     * Function that returns the list of messages containing the given word in the subject or the body
-     * @param word Word the message has to contain
      * @return list of messages containing the given word in the subject or the body
      */
 
     public ArrayList<Message> contains(String word){
-        ArrayList<Message> result = new ArrayList<>();
-        Collections.addAll(result, getAllMessages().stream().filter(t->t.getSubject().contains(word) || t.getText().contains(word)).toArray(Message[]::new));
-        return result;
-    }
-
-    /**
-     * Function that returns the list of messages with less than {@code max_Words} in the body
-     * @param max_Words maximum words in the body of the message
-     * @param messages List of messages from where to filter, if {@code null}, filters all the messages in the system
-     * @return List of messages with less than the given words in the body
-     */
-    public ArrayList<Message> lessThan(int max_Words, ArrayList<Message> messages){
-        ArrayList<Message> result = new ArrayList<>();
-        ArrayList<Message> aux;
-        if (messages == null)
-            aux = getAllMessages();
-        else
-            aux = messages;
-        Collections.addAll(result, aux.stream().filter(t->t.getWordCount() < max_Words).toArray(Message[]::new));
-        return result;
+        return Filtrate.contains(word, getAllMessages());
     }
 
     /**
@@ -179,8 +151,6 @@ public class MailSystem {
      * @return List of messages with less than the given words in the body
      */
     public ArrayList<Message> lessThan(int max_Words){
-        ArrayList<Message> result = new ArrayList<>();
-        Collections.addAll(result, getAllMessages().stream().filter(t->t.getWordCount() < max_Words).toArray(Message[]::new));
-        return result;
+        return Filtrate.lessThan(max_Words, getAllMessages());
     }
 }
