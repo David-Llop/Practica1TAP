@@ -20,11 +20,11 @@ public class CLI {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("AnnaJu-Llop mail client                                                                                         q: quit");
+        System.out.println(" AnnaJu-Llop mail client                                                                                        q: quit");
         if (cli.logged)
-            System.out.println(cli.currentUser.getUsername());
+            System.out.println(" "+cli.currentUser.getUsername());
         else System.out.println();
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
     }
 
 
@@ -64,19 +64,20 @@ public class CLI {
         if (logged) {
             switch (command[0]){
                 case "send":
-                    // Do send
+                    sendMail(command);
                     break;
                 case "filter":
                     filter(command);
                     break;
                 case "update":
-                    // Do update
+                    currentMailBox.update();
+                    System.out.println("Mailbox updated");
                     break;
                 case "list":
-                    // Do print
+                    currentMailBox.forEach(System.out::println);
                     break;
                 case "sort":
-                    // Do sort
+                    sort(command);
                     break;
                 default:
                     System.out.println("Not in admin mode, please close the current user to use the "+ command[0]+" command");
@@ -91,12 +92,52 @@ public class CLI {
                     filter(command);
                     break;
                 case "logas":
-                    logged = login(command);
+                    login(command);
                     break;
                 default:
                     System.out.println("Not logged as user, please login as user to use the "+command[0]+" command");
             }
         }
+        System.out.println("Press enter to enter a new command");
+    }
+
+    private void sendMail(String[] command) {
+        if (command.length < 4){
+            System.out.println("Missing arguments");
+            return;
+        }
+        String text = "";
+        for (int i = 3; i < command.length-1; i++) {
+            text+=command[i];
+            text+=" ";
+        }
+        text+=command[command.length-1];
+        currentMailBox.sendMail(new Message(currentUser.getUsername(), command[1], command[2], text));
+        System.out.println("Mail sent");
+    }
+
+    private void sort(String[] command) {
+        if (command.length>3){
+            System.out.println("Too many parameters");
+            return;
+        }
+        int sorting;
+        if (command[1].equalsIgnoreCase("date"))
+            sorting = Sorting.BY_DATE;
+        else if (command[1].equalsIgnoreCase("subject"))
+            sorting = Sorting.BY_SUBJECT;
+        else if (command[1].equalsIgnoreCase("words"))
+            sorting = Sorting.BY_WORDS;
+        else if (command[1].equalsIgnoreCase("sender"))
+            sorting = Sorting.BY_SENDER;
+        else {
+            System.out.println("Unknown parameter");
+            return;
+        }
+        if (command.length == 3 && command[2].equals("1"))
+            System.out.println(currentMailBox.sort(sorting, true));
+        else
+            System.out.println(currentMailBox.sort(sorting, false));
     }
 
     private void filter(String[] command) {
@@ -143,21 +184,25 @@ public class CLI {
         System.out.println(result);
     }
 
-    private boolean login(String[] command) {
+    private void login(String[] command) {
         if (command.length > 2) {
             System.out.println("Too many arguments");
-            return false;
+            logged = false;
+            return;
         }
         if (command.length < 2){
             System.out.println("Missing username");
-            return false;
+            logged = false;
+            return;
         }
         currentUser = mailSystem.findUser(command[1]);
         if (currentUser == null){
             System.out.println("This user doesn't exist");
-            return false;
+            logged = false;
+            return;
         }
         currentMailBox = mailSystem.addUser(currentUser);
-        return true;
+        logged = true;
+        System.out.println("Successfully logged as " + currentUser.getUsername());
     }
 }

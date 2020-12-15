@@ -1,8 +1,9 @@
-AnnaJu128;Llop00;Cafe;Hola! Vols anar a fer un cafe aquesta tarda??;14-12-2020 01:55:25
-Llop00;AnnaJu128;Cafe;Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?;14-12-2020 01:55:25
-AnnaJu128;Llop00;Cafe;Vale a les 5! pero, podriem anar al coffebook que hi han donuts :P;14-12-2020 01:55:25
-Llop00;AnnaJu128;Cafe;Bueno vale, a les 5 al CoffeBook.;14-12-2020 01:55:25
-AnnaJu128;Llop00;Cafe;Hola! Vols anar a fer un cafe aquesta tarda??;14-12-2020 04:47:10
-Llop00;AnnaJu128;Cafe;Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?;14-12-2020 04:47:10
-AnnaJu128;Llop00;Cafe;Vale a les 5! pero, podriem anar al coffebook que hi han donuts :P;14-12-2020 04:47:10
-Llop00;AnnaJu128;Cafe;Bueno vale, a les 5 al CoffeBook.;14-12-2020 04:47:10
+AnnaJu128;Llop00;Cafe;Hola! Vols anar a fer un cafe aquesta tarda??;14-12-2200 01:55:25
+Llop00;AnnaJu128;Cafe;Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?;14-12-2050 01:55:25
+AnnaJu128;Llop00;Cafe;Vale a les 5! pero, podriem anar al coffebook que hi han donuts :P;14-12-1200 01:55:25
+Llop00;AnnaJu128;Cafe;Bueno vale, a les 5 al CoffeBook.;14-12-2025 01:55:25
+AnnaJu128;Llop00;Cafe;Hola! Vols anar a fer un cafe aquesta tarda??;14-12-2010 04:47:10
+Llop00;AnnaJu128;Cafe;Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?;14-12-2002 04:47:10
+BnnaJu128;Llop00;Dafe;Vale a les 5! pero, podriem anar al coffebook que hi han donuts :P;14-12-2021 04:47:10
+Llop00;AnnaJu128;Cafe;Bueno vale, a les 5 al CoffeBook.;1-12-2000 04:47:10
+Llop00;AnnaJu128;Cafe;Al final no podr‚ quedar, m'ha sorgit un imprevist. Confio que revis aquest missatge a temps. Disculpa les molŠsties. David;15-12-2020 06:43:46

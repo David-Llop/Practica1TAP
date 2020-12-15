@@ -33,11 +33,39 @@ public class MailBox implements Iterable<Message> {
         mailStore.sendMail(mail);
     }
 
-    public void sortByDate(boolean newFirst){
-        if (newFirst)
+    public ArrayList<Message> sort(int sorting, boolean reverse){
+        ArrayList<Message> sortedList = (ArrayList<Message>) messages.clone();
+        /*if (newFirst)
             messages.sort(Comparator.comparing(x->x.getSendDate(), Comparator.reverseOrder()));
         else
-            messages.sort(Comparator.comparing(x->x.getSendDate()));
+            messages.sort(Comparator.comparing(x->x.getSendDate()));*/
+        switch (sorting){
+            case Sorting.BY_DATE:
+                if (!reverse)
+                    Collections.sort(sortedList, Comparator.comparing(Message::getSendDate).reversed());
+                else
+                    Collections.sort(sortedList, Comparator.comparing(Message::getSendDate));
+                break;
+            case Sorting.BY_SUBJECT:
+                if (reverse)
+                    Collections.sort(sortedList, Comparator.comparing(Message::getSubject).reversed());
+                else
+                    Collections.sort(sortedList, Comparator.comparing(Message::getSubject));
+                break;
+            case Sorting.BY_WORDS:
+                if (reverse)
+                    Collections.sort(sortedList, Comparator.comparing(Message::getWordCount).reversed());
+                else
+                    Collections.sort(sortedList, Comparator.comparing(Message::getWordCount));
+                break;
+            case Sorting.BY_SENDER:
+                if (reverse)
+                    Collections.sort(sortedList, Comparator.comparing(Message::getFrom).reversed());
+                else
+                    Collections.sort(sortedList, Comparator.comparing(Message::getFrom));
+                break;
+        }
+        return sortedList;
     }
 
     public ArrayList<Message> contains(String word){
