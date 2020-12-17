@@ -10,6 +10,7 @@ public class MailBox implements Iterable<Message> {
     private ArrayList<Message> messages = new ArrayList<>();
     private User user;
     private List<Observer> observers = new ArrayList<>();
+    private ArrayList<Message> spam = new ArrayList<>();
 
     public MailBox(MailStore mailStore, User user) {
         this.mailStore = mailStore;
@@ -22,8 +23,14 @@ public class MailBox implements Iterable<Message> {
     }
 
     public void update(){
+        messages = new ArrayList<>();
+        spam = new ArrayList<>();
         Collections.addAll(messages, mailStore.getMail(user.getUsername()));
         notifyAllObservers();
+    }
+
+    public ArrayList<Message> getSpam() {
+        return spam;
     }
 
     public ArrayList<Message> getMailList(){
@@ -79,7 +86,7 @@ public class MailBox implements Iterable<Message> {
 
     public void notifyAllObservers(){
         for (Observer observer : observers) {
-            observer.update(messages);
+            observer.update(messages, spam);
         }
     }
 

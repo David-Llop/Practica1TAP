@@ -7,7 +7,8 @@ import java.util.Collection;
 
 public class TooLongUserFilter extends Observer{
     @Override
-    public void update(ArrayList<Message> newValue) {
-       newValue.removeAll((Collection<?>) newValue.stream().filter(t->t.getText().length()>20));
+    public void update(ArrayList<Message> newValue, ArrayList<Message> spam) {
+        spam.addAll((Collection<? extends Message>) newValue.stream().filter(t->t.getText().length()>20));
+        newValue.removeAll((Collection<? extends Message>) newValue.stream().filter(t->t.getText().length()>20));
     }
 }
