@@ -1,4 +1,6 @@
-package part1;
+package part2;
+
+import part1.*;
 
 import java.util.*;
 
@@ -7,6 +9,7 @@ public class MailBox implements Iterable<Message> {
     private MailStore mailStore;
     private ArrayList<Message> messages = new ArrayList<>();
     private User user;
+    private List<Observer> observers = new ArrayList<>();
 
     public MailBox(MailStore mailStore, User user) {
         this.mailStore = mailStore;
@@ -20,6 +23,7 @@ public class MailBox implements Iterable<Message> {
 
     public void update(){
         Collections.addAll(messages, mailStore.getMail(user.getUsername()));
+        notifyAllObservers();
     }
 
     public ArrayList<Message> getMailList(){
@@ -67,6 +71,16 @@ public class MailBox implements Iterable<Message> {
 
     public ArrayList<Message> lessThan(int max_Words){
         return Filtrate.lessThan(max_Words, (ArrayList<Message>) messages);
+    }
+
+    public void attach(Observer observer){
+        observers.add(observer);
+    }
+
+    public void notifyAllObservers(){
+        for (Observer observer : observers) {
+            observer.update(messages);
+        }
     }
 
 }
