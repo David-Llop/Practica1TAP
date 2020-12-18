@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 
 public class MailBox implements Iterable<Message> {
 
-    private MailStore mailStore;
-    private ArrayList<Message> messages = new ArrayList<>();
-    private User user;
+    protected MailStore mailStore;
+    protected ArrayList<Message> messages = new ArrayList<>();
+    protected User user;
 
     public MailBox(MailStore mailStore, User user) {
         this.mailStore = mailStore;
