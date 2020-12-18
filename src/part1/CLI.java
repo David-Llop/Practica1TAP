@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class CLI {
 
@@ -58,7 +59,7 @@ public class CLI {
         System.out.println("Closing mail system");
     }
 
-    public void decodeCommand(String[] command){
+    public void decodeCommand(String[] command) throws ParseException {
         if (logged) {
             switch (command[0]){
                 case "send":
@@ -84,7 +85,7 @@ public class CLI {
         else {
             switch (command[0]){
                 case "createuser":
-                    // Do create user
+                    createUser(command);
                     break;
                 case "filter":
                     filter(command);
@@ -97,6 +98,23 @@ public class CLI {
             }
         }
         System.out.println("Press enter to enter a new command");
+    }
+
+    private void createUser(String[] command) throws ParseException {
+        if (command.length>4){
+            System.out.println("Too many arguments");
+            return;
+        }
+        if (command.length<4){
+            System.out.println("Missing arguments");
+            return;
+        }
+        if (mailSystem.findUser(command[1])!= null){
+            System.out.println("Username in use");
+            return;
+        }
+        mailSystem.addUser(new User(command[1], command[2], User.formatter.parse(command[3])));
+        System.out.println("User created and added");
     }
 
     private void sendMail(String[] command) {
@@ -161,10 +179,10 @@ public class CLI {
         else
             aux= mailSystem.getAllMessages();
         if (command[1].equals("contains")){
-            result = Filtrate.contains(command[2], aux);
+            result = Filtrate.filter(new Filtrate.ContainsPredicate(command[2]), aux);
         }
         if (command[1].equals("lessthan")){
-            result = Filtrate.lessThan(Integer.parseInt(command[2]), aux);
+            result = Filtrate.filter(new Filtrate.LessThanPredicate(Integer.parseInt(command[2])), aux);
         }
         if (command.length==3){
             System.out.println("Resultats de la cerca:");
@@ -173,10 +191,10 @@ public class CLI {
         }
         aux = result;
         if (command[3].equals("contains")){
-            result = Filtrate.contains(command[4], aux);
+            result = Filtrate.filter(new Filtrate.ContainsPredicate(command[4]), aux);
         }
         if (command[3].equals("lessthan")){
-            result = Filtrate.lessThan(Integer.parseInt(command[4]), aux);
+            result = Filtrate.filter(new Filtrate.LessThanPredicate(Integer.parseInt(command[4])), aux);
         }
         System.out.println("Resultats de la cerca:");
         System.out.println(result);

@@ -46,6 +46,26 @@ public class Message {
         return text;
     }
 
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
+
     public String toString(){
         return from + ";" + to + ";" + subject + ";" + text +";" + formatter.format(sendDate) + "\n";
     }
@@ -53,4 +73,5 @@ public class Message {
     public int getWordCount(){
         return text.split(" ").length;
     }
+
 }

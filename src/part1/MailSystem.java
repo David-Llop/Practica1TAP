@@ -3,6 +3,7 @@ package part1;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -57,7 +58,7 @@ public class MailSystem {
     public int getTotalMessages(){
         int count = 0;
         for (User user: usersList) {
-            count+=mailStore.getMail(user.getUsername()).length;
+            count+=mailStore.getMail(user.getUsername()).size();
         }
         return count;
     }
@@ -85,7 +86,7 @@ public class MailSystem {
     public ArrayList<Message> getAllMessages(){
         ArrayList<Message> messages = new ArrayList<>();
         for (User user : usersList) {
-            Collections.addAll(messages, mailStore.getMail(user.getUsername()));
+            messages.addAll(mailStore.getMail(user.getUsername()));
         }
         return messages;
     }
@@ -110,7 +111,7 @@ public class MailSystem {
         for (User user :
                 usersList) {
             if (user.getName().equals(name))
-                for (Message message: (ArrayList<Message>) getAllMessages().stream().filter(t->t.getFrom().equals(user.getUsername()))) {
+                for (Message message: filtrate(message -> message.getFrom().equals(user.getUsername()))) {
                     count+=message.getWordCount();
                 }
         }
@@ -130,27 +131,17 @@ public class MailSystem {
         ArrayList<Message> messagesBornBefore = new ArrayList<>();
         for (User user :
                 usersBefore) {
-            Collections.addAll(messagesBornBefore, mailStore.getMail(user.getUsername()));
+            messagesBornBefore.addAll(mailStore.getMail(user.getUsername()));
         }
         return messagesBornBefore;
     }
 
     /**
-     * Function that returns the list of messages containing the given word in the subject or the body
-     * @param word Word the message has to contain
-     * @return list of messages containing the given word in the subject or the body
-     */
-
-    public ArrayList<Message> contains(String word){
-        return Filtrate.contains(word, getAllMessages());
-    }
-
-    /**
-     * Function that returns the list of messages with less than {@code max_Words} in the body
-     * @param max_Words maximum words in the body of the message
+     * Function that returns the list of messages according to the given predicate
+     * @param predicate predicate to filter the messages
      * @return List of messages with less than the given words in the body
      */
-    public ArrayList<Message> lessThan(int max_Words){
-        return Filtrate.lessThan(max_Words, getAllMessages());
+    public ArrayList<Message> filtrate(Predicate<Message> predicate){
+        return Filtrate.filter(predicate, getAllMessages());
     }
 }

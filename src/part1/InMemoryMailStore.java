@@ -35,8 +35,8 @@ public class InMemoryMailStore implements MailStore{
      * @return {@link Message} [] of mails intended for the given user
      */
     @Override
-    public Message[] getMail(String user) {
-        return mailHashTable.get(user).toArray(new Message[0]);
+    public ArrayList<Message> getMail(String user) {
+        return mailHashTable.get(user);
     }
 
     public static MailStore getInstance() {

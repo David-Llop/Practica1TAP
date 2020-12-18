@@ -1,6 +1,7 @@
 package part1;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class MailBox implements Iterable<Message> {
 
@@ -19,7 +20,7 @@ public class MailBox implements Iterable<Message> {
     }
 
     public void update(){
-        Collections.addAll(messages, mailStore.getMail(user.getUsername()));
+        messages.addAll(mailStore.getMail(user.getUsername()));
     }
 
     public ArrayList<Message> getMailList(){
@@ -61,12 +62,8 @@ public class MailBox implements Iterable<Message> {
         return sortedList;
     }
 
-    public ArrayList<Message> contains(String word){
-        return Filtrate.contains(word, (ArrayList<Message>) messages);
-    }
-
-    public ArrayList<Message> lessThan(int max_Words){
-        return Filtrate.lessThan(max_Words, (ArrayList<Message>) messages);
+    public ArrayList<Message> filter(Predicate<Message> predicate){
+        return Filtrate.filter(predicate, (ArrayList<Message>) messages);
     }
 
 }

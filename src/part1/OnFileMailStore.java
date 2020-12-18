@@ -43,7 +43,7 @@ public class OnFileMailStore implements MailStore{
      * @return {@link Message} [] of mails intended for the given user
      */
     @Override
-    public Message[] getMail(String user) {
+    public ArrayList<Message> getMail(String user) {
         Stream<Message> result = Arrays.stream(new Message[0]);
         ArrayList<Message> aux = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class OnFileMailStore implements MailStore{
             e.printStackTrace();
             aux.add(null);
         }
-        return aux.stream().filter(t->t.getTo().equals(user)).toArray(Message[] :: new);
+        return (ArrayList<Message>) aux.stream().filter(t->t.getTo().equals(user));
     }
 
 

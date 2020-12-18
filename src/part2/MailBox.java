@@ -25,7 +25,7 @@ public class MailBox implements Iterable<Message> {
     public void update(){
         messages = new ArrayList<>();
         spam = new ArrayList<>();
-        Collections.addAll(messages, mailStore.getMail(user.getUsername()));
+        messages.addAll(mailStore.getMail(user.getUsername()));
         notifyAllObservers();
     }
 
@@ -73,11 +73,11 @@ public class MailBox implements Iterable<Message> {
     }
 
     public ArrayList<Message> contains(String word){
-        return Filtrate.contains(word, (ArrayList<Message>) messages);
+        return Filtrate.filter(new Filtrate.ContainsPredicate(word), messages);
     }
 
     public ArrayList<Message> lessThan(int max_Words){
-        return Filtrate.lessThan(max_Words, (ArrayList<Message>) messages);
+        return Filtrate.filter(new Filtrate.LessThanPredicate(max_Words), messages);
     }
 
     public void attach(Observer observer){

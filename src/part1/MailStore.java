@@ -1,5 +1,7 @@
 package part1;
 
+import java.util.ArrayList;
+
 public interface MailStore {
 
     /**
@@ -13,6 +15,6 @@ public interface MailStore {
      * @param user {@link User} for whom the mails are intended
      * @return {@link Message} [] of mails intended for the given user
      */
-    Message[] getMail(String user);
+    ArrayList<Message> getMail(String user);
 
 }
