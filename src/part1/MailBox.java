@@ -31,34 +31,10 @@ public class MailBox implements Iterable<Message> {
         mailStore.sendMail(mail);
     }
 
-    public ArrayList<Message> sort(int sorting, boolean reverse){
+    public ArrayList<Message> sort(Comparator<Message> messageComparator){
         ArrayList<Message> sortedList = (ArrayList<Message>) messages.clone();
-        switch (sorting){
-            case Sorting.BY_DATE:
-                if (!reverse)
-                    Collections.sort(sortedList, Comparator.comparing(Message::getSendDate).reversed());
-                else
-                    Collections.sort(sortedList, Comparator.comparing(Message::getSendDate));
-                break;
-            case Sorting.BY_SUBJECT:
-                if (reverse)
-                    Collections.sort(sortedList, Comparator.comparing(Message::getSubject).reversed());
-                else
-                    Collections.sort(sortedList, Comparator.comparing(Message::getSubject));
-                break;
-            case Sorting.BY_WORDS:
-                if (reverse)
-                    Collections.sort(sortedList, Comparator.comparing(Message::getWordCount).reversed());
-                else
-                    Collections.sort(sortedList, Comparator.comparing(Message::getWordCount));
-                break;
-            case Sorting.BY_SENDER:
-                if (reverse)
-                    Collections.sort(sortedList, Comparator.comparing(Message::getFrom).reversed());
-                else
-                    Collections.sort(sortedList, Comparator.comparing(Message::getFrom));
-                break;
-        }
+
+        Collections.sort(sortedList, messageComparator);
         return sortedList;
     }
 

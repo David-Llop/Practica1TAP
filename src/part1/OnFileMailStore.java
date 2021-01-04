@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OnFileMailStore implements MailStore{
@@ -46,6 +48,7 @@ public class OnFileMailStore implements MailStore{
     public ArrayList<Message> getMail(String user) {
         Stream<Message> result = Arrays.stream(new Message[0]);
         ArrayList<Message> aux = new ArrayList<>();
+        ArrayList<Message> aux2 = new ArrayList<>();
 
         try {
             Scanner scanner = new Scanner(file);
@@ -60,7 +63,8 @@ public class OnFileMailStore implements MailStore{
             e.printStackTrace();
             aux.add(null);
         }
-        return (ArrayList<Message>) aux.stream().filter(t->t.getTo().equals(user));
+         aux2.addAll(aux.stream().filter(t->t.getTo().equals(user)).collect(Collectors.toList()));
+        return aux2 ;
     }
 
 

@@ -33,10 +33,10 @@ public class Test
         System.out.println("Default");
         annajuMailbox.forEach(System.out::println);
         System.out.println("New First");
-        annajuMailbox.sort(Sorting.BY_DATE, true);
+        //annajuMailbox.sort(Sorting.BY_DATE, true);
         annajuMailbox.forEach(System.out::println);
         System.out.println("Old first");
-        annajuMailbox.sort(Sorting.BY_DATE, false);
+        //annajuMailbox.sort(Sorting.BY_DATE, false);
         annajuMailbox.forEach(System.out::println);
     }
 }

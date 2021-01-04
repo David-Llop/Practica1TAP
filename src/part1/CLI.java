@@ -3,6 +3,7 @@ package part1;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -133,27 +134,37 @@ public class CLI {
     }
 
     private void sort(String[] command) {
-        if (command.length>3){
+        if (command.length > 3) {
             System.out.println("Too many parameters");
             return;
         }
-        int sorting;
-        if (command[1].equalsIgnoreCase("date"))
-            sorting = Sorting.BY_DATE;
-        else if (command[1].equalsIgnoreCase("subject"))
-            sorting = Sorting.BY_SUBJECT;
-        else if (command[1].equalsIgnoreCase("words"))
-            sorting = Sorting.BY_WORDS;
-        else if (command[1].equalsIgnoreCase("sender"))
-            sorting = Sorting.BY_SENDER;
-        else {
+        Comparator<Message> sorting;
+        if (command[1].equalsIgnoreCase("date")) {
+            if (command[2].equals("0"))
+                sorting = new Sort.SortOldFirst();
+            else
+                sorting = new Sort.SortNewFirst();
+        }else if (command[1].equalsIgnoreCase("subject")){
+            if (command[2].equals("1"))
+                sorting = new Sort.SortSubjectDesc();
+            else
+                sorting = new Sort.SortSubjectAsc();
+        }else if (command[1].equalsIgnoreCase("words")){
+            if (command[2].equals("1"))
+                sorting = new Sort.SortWordsDesc();
+            else
+                sorting = new Sort.SortWordsAsc();
+    }   else if (command[1].equalsIgnoreCase("sender")) {
+            if (command[2].equals("1"))
+                sorting = new Sort.SortSenderDesc();
+            else
+                sorting = new Sort.SortSenderAsc();
+        }else {
             System.out.println("Unknown parameter");
             return;
         }
-        if (command.length == 3 && command[2].equals("1"))
-            System.out.println(currentMailBox.sort(sorting, true));
-        else
-            System.out.println(currentMailBox.sort(sorting, false));
+        System.out.println(currentMailBox.sort(sorting));
+
     }
 
     private void filter(String[] command) {
