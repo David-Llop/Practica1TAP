@@ -3,25 +3,52 @@ package part1;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OnFileMailStore implements MailStore{
 
     private File file;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-    private static OnFileMailStore mailStore = new OnFileMailStore();
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
-    private OnFileMailStore(){
-        file = new File("MailStore.txt");
+    public OnFileMailStore(String file) {
+        this.file = new File(file);
+    }
+
+    public OnFileMailStore(String file, InMemoryMailStore memoryMailStore) {
+        this.file = new File(file);
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.file, false));
+            List<List<Message>> allMails = new ArrayList<>(memoryMailStore.getMailHashTable().values());
+            allMails.stream().flatMap(Collection::stream).sorted(new Sort.SortOldFirst()).forEach(mail -> {
+                try {
+                    bufferedWriter.write(mail.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setFile(String filepath){
-        file = new File(filepath);
+        File newFile = new File(filepath);
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(newFile, false));
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()){
+                bufferedWriter.write(scanner.nextLine());
+            }
+            scanner.close();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        file = newFile;
     }
 
     /**
@@ -37,6 +64,14 @@ public class OnFileMailStore implements MailStore{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public static SimpleDateFormat getFormatter() {
+        return formatter;
     }
 
     /**
@@ -58,17 +93,14 @@ public class OnFileMailStore implements MailStore{
                     aux.add(new Message(fields[0],fields[1],fields[2],fields[3], formatter.parse(fields[4])));
                 }
             }
-
+            scanner.close();
         } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
             aux.add(null);
         }
          aux2.addAll(aux.stream().filter(t->t.getTo().equals(user)).collect(Collectors.toList()));
         return aux2 ;
+
     }
 
-
-    public static MailStore getInstance() {
-        return mailStore;
-    }
 }

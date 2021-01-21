@@ -41,9 +41,9 @@ public class CLI {
 
         }while (!"FfMm".contains(options));
         if (options.equalsIgnoreCase("f"))
-            cli.mailSystem.setMailStore(OnFileMailStore.getInstance());
+            cli.mailSystem.setMailStore(new OnFileMailStore("prova.txt"));
         else
-            cli.mailSystem.setMailStore(InMemoryMailStore.getInstance());
+            cli.mailSystem.setMailStore(new InMemoryMailStore());
         keyboard.nextLine();
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));

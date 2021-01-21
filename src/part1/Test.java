@@ -9,7 +9,7 @@ public class Test
 
 
         MailSystem mailSystem = MailSystem.getMailSystem();
-        mailSystem.setMailStore(OnFileMailStore.getInstance());
+        mailSystem.setMailStore(new InMemoryMailStore());
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
         MailBox llopMailbox = mailSystem.addUser(Llop00);
@@ -38,5 +38,8 @@ public class Test
         System.out.println("Old first");
         //annajuMailbox.sort(Sorting.BY_DATE, false);
         annajuMailbox.forEach(System.out::println);
+        mailSystem.setMailStore(new OnFileMailStore("prova.txt", (InMemoryMailStore) mailSystem.getMailStore()));
+        mailSystem.getAllMessages().stream().sorted(new Sort.SortNewFirst()).forEach(System.out::println);
+
     }
 }
