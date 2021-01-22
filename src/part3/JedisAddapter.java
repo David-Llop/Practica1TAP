@@ -13,7 +13,7 @@ import java.util.List;
 public class JedisAddapter implements MailStore {
 
     private static JedisAddapter jedisAddapter = new JedisAddapter();
-    Jedis jedisClient = new Jedis("localhost");
+    private Jedis jedisClient = new Jedis("localhost");
 
     private JedisAddapter() {
     }

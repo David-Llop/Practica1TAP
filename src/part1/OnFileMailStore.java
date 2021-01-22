@@ -16,25 +16,6 @@ public class OnFileMailStore implements MailStore{
         this.file = new File(file);
     }
 
-    public OnFileMailStore(String file, InMemoryMailStore memoryMailStore) {
-        this.file = new File(file);
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.file, false));
-            List<List<Message>> allMails = new ArrayList<>(memoryMailStore.getMailHashTable().values());
-            allMails.stream().flatMap(Collection::stream).sorted(new Sort.SortOldFirst()).forEach(mail -> {
-                try {
-                    bufferedWriter.write(mail.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public void setFile(String filepath){
         File newFile = new File(filepath);
         try {

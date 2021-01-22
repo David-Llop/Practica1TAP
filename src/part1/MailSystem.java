@@ -27,7 +27,15 @@ public class MailSystem {
     }
 
     public void setMailStore(MailStore mailStore) {
-        this.mailStore = mailStore;
+        if (this.mailStore == null) {
+            this.mailStore = mailStore;
+            return;
+        }
+        if (this.mailStore == mailStore){
+            return;
+        }
+        getAllMessages().forEach(m -> mailStore.sendMail(m));
+        return;
     }
 
     public User findUser(String username){

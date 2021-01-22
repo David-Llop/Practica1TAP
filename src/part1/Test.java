@@ -38,7 +38,7 @@ public class Test
         System.out.println("Old first");
         //annajuMailbox.sort(Sorting.BY_DATE, false);
         annajuMailbox.forEach(System.out::println);
-        mailSystem.setMailStore(new OnFileMailStore("prova.txt", (InMemoryMailStore) mailSystem.getMailStore()));
+        mailSystem.setMailStore(new OnFileMailStore("prova.txt"));
         mailSystem.getAllMessages().stream().sorted(new Sort.SortNewFirst()).forEach(System.out::println);
 
     }
