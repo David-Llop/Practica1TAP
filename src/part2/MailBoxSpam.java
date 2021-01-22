@@ -9,7 +9,7 @@ public class MailBoxSpam  extends MailBox implements Iterable<Message> {
     private List<Observer> observers = new ArrayList<>();
     private ArrayList<Message> spam = new ArrayList<>();
 
-    public MailBoxSpam(MailStore mailStore, User user) {
+    public MailBoxSpam(IMailStore mailStore, User user) {
         super(mailStore, user);
     }
 

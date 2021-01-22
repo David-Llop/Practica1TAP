@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
-public class InMemoryMailStore implements MailStore{
+public class InMemoryMailStore implements IMailStore{
 
     private Hashtable<String, ArrayList<Message>> mailHashTable = new Hashtable<>();
 

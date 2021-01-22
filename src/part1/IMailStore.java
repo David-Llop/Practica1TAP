@@ -2,7 +2,7 @@ package part1;
 
 import java.util.ArrayList;
 
-public interface MailStore {
+public interface IMailStore {
 
     /**
      * Function that sends a given Message

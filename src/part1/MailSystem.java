@@ -1,5 +1,11 @@
 package part1;
 
+import part3.IMailStoreFactory;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -7,22 +13,24 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Class with the Mail System functions, follows the singleton pattern
+ * Class with the Mail System functions
  */
 public class MailSystem {
+
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-    private MailStore mailStore;
+    private IMailStore mailStore;
     private ArrayList<User> usersList = new ArrayList<>();
 
-    public MailSystem(MailStore mailStore){
-        this.mailStore = mailStore;
+
+    public MailSystem(IMailStoreFactory mailStoreFactory) throws NoSuchMethodException {
+        mailStore = mailStoreFactory.createMailstore();
     }
 
-    public MailStore getMailStore() {
+    public IMailStore getMailStore() {
         return mailStore;
     }
 
-    public void setMailStore(MailStore mailStore) {
+    public void setMailStore(IMailStore mailStore) {
         if (this.mailStore == null) {
             this.mailStore = mailStore;
             return;

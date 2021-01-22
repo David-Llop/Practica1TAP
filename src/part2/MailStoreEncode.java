@@ -1,17 +1,17 @@
 package part2;
 
-import part1.MailStore;
+import part1.IMailStore;
 import part1.Message;
 import part1.User;
 
 import java.util.ArrayList;
 
-public class MailStoreEncode implements MailStore {
+public class MailStoreEncode implements IMailStore {
 
-    MailStore mailStore;
+    IMailStore mailStore;
     Strategy encodingStrategy;
 
-    public MailStoreEncode(MailStore mailStore, Strategy encodingStrategy) {
+    public MailStoreEncode(IMailStore mailStore, Strategy encodingStrategy) {
         this.mailStore = mailStore;
         this.encodingStrategy = encodingStrategy;
     }

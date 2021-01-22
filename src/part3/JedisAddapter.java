@@ -1,6 +1,6 @@
 package part3;
 
-import part1.MailStore;
+import part1.IMailStore;
 import part1.Message;
 import part1.OnFileMailStore;
 import redis.clients.jedis.Jedis;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class JedisAddapter implements MailStore {
+public class JedisAddapter implements IMailStore {
 
     private static JedisAddapter jedisAddapter = new JedisAddapter();
     private Jedis jedisClient = new Jedis("localhost");

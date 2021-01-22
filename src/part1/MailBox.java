@@ -5,11 +5,11 @@ import java.util.function.Predicate;
 
 public class MailBox implements Iterable<Message> {
 
-    protected MailStore mailStore;
+    protected IMailStore mailStore;
     protected ArrayList<Message> messages = new ArrayList<>();
     protected User user;
 
-    public MailBox(MailStore mailStore, User user) {
+    public MailBox(IMailStore mailStore, User user) {
         this.mailStore = mailStore;
         this.user = user;
     }

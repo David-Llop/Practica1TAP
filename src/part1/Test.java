@@ -1,21 +1,23 @@
 package part1;
 
+import part3.FileMailStoreFactory;
+
 import java.text.ParseException;
 
 // MAIN
 public class Test
 {
-    public static void main (String[] Args) throws ParseException {
+    public static void main (String[] Args) throws ParseException, NoSuchMethodException {
 
 
-        MailSystem mailSystem = new MailSystem(new OnFileMailStore("prova.txt"));
+        MailSystem mailSystem = new MailSystem(new FileMailStoreFactory());
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
         mailSystem.setMailStore(new InMemoryMailStore());
         MailBox llopMailbox = mailSystem.addUser(Llop00);
         MailBox annajuMailbox = mailSystem.addUser(AnnaJu128);
         Message num1 = new Message("AnnaJu128", "Llop00", "Cafe", "Hola! Vols anar a fer un cafe aquesta tarda??");
-        MailStore mailStore = mailSystem.getMailStore();
+        IMailStore mailStore = mailSystem.getMailStore();
         annajuMailbox.sendMail(num1);
         llopMailbox.update();
         Message num2 = new Message("Llop00", "AnnaJu128", "Cafe", "Si perfecte! pero a partir de les 5. On vols quedar? al bar de la uni?");

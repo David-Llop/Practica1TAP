@@ -1,5 +1,8 @@
 package part1;
 
+import part3.FileMailStoreFactory;
+import part3.MemoryMailStoreFactory;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class CLI {
 
 
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException, NoSuchMethodException {
         Scanner keyboard = new Scanner(System.in);
         String options;
         CLI cli = new CLI();
@@ -41,9 +44,9 @@ public class CLI {
 
         }while (!"FfMm".contains(options));
         if (options.equalsIgnoreCase("f"))
-            cli.mailSystem = new MailSystem(new OnFileMailStore("prova.txt"));
+            cli.mailSystem = new MailSystem(new FileMailStoreFactory());
         else
-            cli.mailSystem = new MailSystem(new InMemoryMailStore());
+            cli.mailSystem = new MailSystem(new MemoryMailStoreFactory());
         keyboard.nextLine();
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
