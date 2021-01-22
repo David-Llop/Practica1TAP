@@ -8,10 +8,10 @@ public class Test
     public static void main (String[] Args) throws ParseException {
 
 
-        MailSystem mailSystem = MailSystem.getMailSystem();
-        mailSystem.setMailStore(new InMemoryMailStore());
+        MailSystem mailSystem = new MailSystem(new OnFileMailStore("prova.txt"));
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
+        mailSystem.setMailStore(new InMemoryMailStore());
         MailBox llopMailbox = mailSystem.addUser(Llop00);
         MailBox annajuMailbox = mailSystem.addUser(AnnaJu128);
         Message num1 = new Message("AnnaJu128", "Llop00", "Cafe", "Hola! Vols anar a fer un cafe aquesta tarda??");
@@ -33,11 +33,10 @@ public class Test
         System.out.println("Default");
         annajuMailbox.forEach(System.out::println);
         System.out.println("New First");
-        //annajuMailbox.sort(Sorting.BY_DATE, true);
+        annajuMailbox.sort(new Sort.SortNewFirst()).forEach(System.out::println);
         annajuMailbox.forEach(System.out::println);
         System.out.println("Old first");
-        //annajuMailbox.sort(Sorting.BY_DATE, false);
-        annajuMailbox.forEach(System.out::println);
+        annajuMailbox.sort(new Sort.SortOldFirst()).forEach(System.out::println);
         mailSystem.setMailStore(new OnFileMailStore("prova.txt"));
         mailSystem.getAllMessages().stream().sorted(new Sort.SortNewFirst()).forEach(System.out::println);
 

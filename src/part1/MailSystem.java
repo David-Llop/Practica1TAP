@@ -13,17 +13,13 @@ public class MailSystem {
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private MailStore mailStore;
     private ArrayList<User> usersList = new ArrayList<>();
-    private static MailSystem mailSystem = new MailSystem();
 
-    private MailSystem(){}
-
+    public MailSystem(MailStore mailStore){
+        this.mailStore = mailStore;
+    }
 
     public MailStore getMailStore() {
         return mailStore;
-    }
-
-    public static MailSystem getMailSystem() {
-        return mailSystem;
     }
 
     public void setMailStore(MailStore mailStore) {

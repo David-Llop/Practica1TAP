@@ -12,7 +12,7 @@ public class CLI {
     private boolean logged = false;
     private User currentUser;
     private MailBox currentMailBox;
-    private MailSystem mailSystem = MailSystem.getMailSystem();
+    private MailSystem mailSystem;
 
     private static void cleanScrean(CLI cli) throws IOException {
         try {
@@ -41,9 +41,9 @@ public class CLI {
 
         }while (!"FfMm".contains(options));
         if (options.equalsIgnoreCase("f"))
-            cli.mailSystem.setMailStore(new OnFileMailStore("prova.txt"));
+            cli.mailSystem = new MailSystem(new OnFileMailStore("prova.txt"));
         else
-            cli.mailSystem.setMailStore(new InMemoryMailStore());
+            cli.mailSystem = new MailSystem(new InMemoryMailStore());
         keyboard.nextLine();
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
