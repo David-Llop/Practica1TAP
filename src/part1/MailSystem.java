@@ -22,6 +22,10 @@ public class MailSystem {
         mailStore = mailStoreFactory.createMailstore();
     }
 
+    public MailSystem(IMailStore mailStore) {
+        this.mailStore = mailStore;
+    }
+
     public IMailStore getMailStore() {
         return mailStore;
     }
