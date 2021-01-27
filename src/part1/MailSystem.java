@@ -2,10 +2,6 @@ package part1;
 
 import part3.IMailStoreFactory;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -39,7 +35,7 @@ public class MailSystem {
             return;
         }
         getAllMessages().forEach(m -> mailStore.sendMail(m));
-        return;
+        this.mailStore = mailStore;
     }
 
     public User findUser(String username){

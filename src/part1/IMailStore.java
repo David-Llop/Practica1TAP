@@ -11,9 +11,9 @@ public interface IMailStore {
     void sendMail(Message mail);
 
     /**
-     * Function that, given a {@link User}, returns the {@link Message} [] intended for it
+     * Function that, given a {@link User}, returns the {@link ArrayList}<{@link Message}> intended for it
      * @param user {@link User} for whom the mails are intended
-     * @return {@link Message} [] of mails intended for the given user
+     * @return {@link ArrayList}<{@link Message}> of mails intended for the given user
      */
     ArrayList<Message> getMail(String user);
 
