@@ -7,7 +7,7 @@ import part3.IMailStoreFactory;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 
-@Config(store = "PART3.RedisMailStore", log = true)
+@Config(store = "part3.JedisAddapter", log = true)
 
 public class StoreUsingProxy extends MailSystem {
     public StoreUsingProxy() {
@@ -23,7 +23,7 @@ public class StoreUsingProxy extends MailSystem {
 
             classe = Class.forName(con.store());
 
-            if (classe.toString().equals("class PART_3.RedisMailStore")){
+            if (classe.toString().equals("class part3.JedisAddapter")){
                 java.lang.reflect.Method a;
                 a = classe.getMethod("getInstance");
 

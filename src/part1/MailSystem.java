@@ -1,6 +1,7 @@
 package part1;
 
 import part3.IMailStoreFactory;
+import part4.Config;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -15,6 +15,9 @@ public class OnFileMailStore implements IMailStore{
     public OnFileMailStore(String file) {
         this.file = new File(file);
     }
+    public OnFileMailStore() {
+        this.file = new File("MailStore.txt");
+    }
 
     public void setFile(String filepath){
         File newFile = new File(filepath);
