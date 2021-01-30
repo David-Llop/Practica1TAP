@@ -52,4 +52,30 @@ public class Filtrate {
             return message.getText().contains(word) || message.getSubject().contains(word);
         }
     }
+
+    public static class SenderIs implements Predicate<Message> {
+        String  string;
+
+        public SenderIs(String string) {
+            this.string = string;
+        }
+
+        @Override
+        public boolean test(Message message) {
+            return message.getFrom().equals(string);
+        }
+    }
+
+    public static class ContainsSubject implements Predicate<Message> {
+        String str;
+
+        public ContainsSubject(String str) {
+            this.str = str;
+        }
+
+        @Override
+        public boolean test(Message message) {
+            return message.getSubject().contains(str);
+        }
+    }
 }

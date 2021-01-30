@@ -132,20 +132,22 @@ public class MailSystem {
     }
 
     /**
-     * Function to get all the messages sent to users born before the given year
+     * Function to get all the messages sent by users born before the given year
      * @param year Year before which the receiver must have been born
-     * @return list of messages sent to users born before the given year
+     * @return list of messages sent by users born before the given year
      * @throws ParseException as dd-mm-yyyy date format is used and only the year is given, it has to be parsed to Date
      */
     public ArrayList<Message> toBornBefore(int year) throws ParseException {
         String dateString = "01-01-"+year;
         Date date = formatter.parse(dateString);
-        ArrayList<User> usersBefore = (ArrayList<User>) usersList.stream().filter(t->t.getBirthdate().before(date));
         ArrayList<Message> messagesBornBefore = new ArrayList<>();
-        for (User user :
-                usersBefore) {
-            messagesBornBefore.addAll(mailStore.getMail(user.getUsername()));
+        if (usersList.stream().filter(t->t.getBirthdate().before(date)) != null){
+            ArrayList<User> usersBefore = new ArrayList<>();
+            usersList.stream().filter(t->t.getBirthdate().before(date)).collect(Collectors.toCollection(ArrayList::new)).forEach(user -> usersBefore.add(user));
+            messagesBornBefore = getAllMessages().stream().filter(message -> usersBefore.contains(findUser(message.getFrom()))).collect(Collectors.toCollection(ArrayList::new));
         }
+
+
         return messagesBornBefore;
     }
 

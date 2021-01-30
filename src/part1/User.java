@@ -8,10 +8,11 @@ public class User{
     private Date birthdate;
     public static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-    public User(String username, String name, Date birthdat) {
+    public User(String username, String name, Date birthdate) {
         this.username = username;
         this.name = name;
         this.birthdate = birthdate;
+
     }
 
     public String getUsername() {
