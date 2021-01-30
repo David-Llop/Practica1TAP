@@ -16,10 +16,13 @@ public class Test
         // Create at least 3 users, two have the same name but different username.
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
-        User Buzzerage = new User("Buzzerage", "David", User.formatter.parse("01-01-2000"));
-        MailBox llopMailbox = mailSystem.addUser(Llop00);
-        MailBox annajuMailbox = mailSystem.addUser(AnnaJu128);
-        MailBox buzzerageMailbox = mailSystem.addUser(Buzzerage);
+        User Buzzerage = new User("Llop00", "David", User.formatter.parse("01-01-2000"));
+        System.out.println(mailSystem.addUser(AnnaJu128));
+        System.out.println(mailSystem.addUser(Llop00));
+        System.out.println(mailSystem.addUser(Buzzerage));
+        MailBox llopMailbox = mailSystem.retrieveMailBox(Llop00.getUsername());
+        MailBox annajuMailbox = mailSystem.retrieveMailBox(AnnaJu128.getUsername());
+        MailBox buzzerageMailbox = mailSystem.retrieveMailBox(Buzzerage.getUsername());
 
         // Then, use the mailboxes to send a few emails between them. Make some of them share the
         // same subject and make enough so that the following tests have results.
@@ -82,9 +85,15 @@ public class Test
         System.out.println(mailSystem.getAverageUserMessages());
 
         //Group the messages per subject in a Map<String, List<Message>> and print it.
-
+        mailSystem.groupBySubject().forEach((s, messages) -> {
+            System.out.println(s);
+            for (Message m :
+                    messages) {
+                System.out.println("\t"+m);
+            }
+        });
         //Count the words of all messages sent by users with a certain real name.
-
+        System.out.println(mailSystem.wordsByName("Anna"));
         //Use the name that you used on two users. Print the result.
         //Print the messages received by users born before year 2000.
 

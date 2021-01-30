@@ -231,8 +231,12 @@ public class CLI {
             logged = false;
             return;
         }
-        currentMailBox = mailSystem.addUser(currentUser);
-        logged = true;
-        System.out.println("Successfully logged as " + currentUser.getUsername());
+        logged = mailSystem.addUser(currentUser);
+        if (logged){
+            currentMailBox = mailSystem.retrieveMailBox(currentUser.getUsername());
+            System.out.println("Successfully logged as " + currentUser.getUsername());
+        }
+        else
+            System.out.println("This user doesn't exist");
     }
 }

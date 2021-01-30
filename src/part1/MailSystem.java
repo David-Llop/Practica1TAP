@@ -57,11 +57,18 @@ public class MailSystem {
      * @param user user to add or login
      * @return Mailbox with the user messages
      */
-    public MailBox addUser(User user){
-        if (!usersList.contains(user)){
+    public boolean addUser(User user){
+        if (usersList.stream().filter(user1 -> user1.getUsername().equals(user.getUsername())).collect(Collectors.toCollection(ArrayList::new)).size() == 0){
             usersList.add(user);
+            return true;
         }
-        return new MailBox(mailStore, user);
+        return false;
+    }
+
+    public MailBox retrieveMailBox(String username){
+        if (usersList.stream().filter(user1 -> user1.getUsername().equals(username)).collect(Collectors.toCollection(ArrayList::new)).size() == 0)
+            return null;
+        return new MailBox(mailStore, findUser(username));
     }
 
     /**
@@ -108,7 +115,6 @@ public class MailSystem {
      * Function to group all the messages in the system by subject
      * @return Map with the messages grouped by subject
      */
-    // TODO: Afegir camp messages igual que amb els filtres???
     public Map<String, List<Message>> groupBySubject(){
         return getAllMessages().stream().collect(Collectors.groupingBy(Message::getSubject));
     }
@@ -119,15 +125,9 @@ public class MailSystem {
      * @return count of words in the messages send by the user
      */
     public int wordsByName(String name){
-        int count=0;
+        int count;
         ArrayList<String> usernames = new ArrayList<>();
-        for (User user :
-                usersList) {
-            if (user.getName().equals(name))
-                for (Message message: filtrate(message -> message.getFrom().equals(user.getUsername()))) {
-                    count+=message.getWordCount();
-                }
-        }
+        count = usersList.stream().filter(user -> user.getName().equals(name)).mapToInt(user -> filtrate(message -> message.getFrom().equals(user.getUsername())).stream().mapToInt(Message::getWordCount).sum()).sum();
         return count;
     }
 
