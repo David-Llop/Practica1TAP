@@ -14,7 +14,7 @@ public class MailBoxSpam  extends MailBox implements Iterable<Message> {
     }
 
     public MailBoxSpam(MailBox mailBox){
-        super();
+        super(mailBox.getMailStore(), mailBox.getUser());
     }
 
     public void update(){

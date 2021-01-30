@@ -14,8 +14,12 @@ public class MailBox implements Iterable<Message> {
         this.user = user;
     }
 
-    public MailBox() {
+    public IMailStore getMailStore() {
+        return mailStore;
+    }
 
+    public User getUser() {
+        return user;
     }
 
     @Override
