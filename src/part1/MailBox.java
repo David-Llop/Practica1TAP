@@ -14,6 +14,10 @@ public class MailBox implements Iterable<Message> {
         this.user = user;
     }
 
+    public MailBox() {
+
+    }
+
     @Override
     public Iterator<Message> iterator() {
         return messages.iterator();

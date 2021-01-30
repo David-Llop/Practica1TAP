@@ -13,6 +13,10 @@ public class MailBoxSpam  extends MailBox implements Iterable<Message> {
         super(mailStore, user);
     }
 
+    public MailBoxSpam(MailBox mailBox){
+        super();
+    }
+
     public void update(){
         messages = new ArrayList<>();
         spam = new ArrayList<>();
