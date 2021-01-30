@@ -30,6 +30,8 @@ public class JedisAddapter implements IMailStore {
     @Override
     public ArrayList<Message> getMail(String user) {
         String mails = jedisClient.get(user);
+        if (mails == null)
+            return new ArrayList<>();
         List<String> mailList = new ArrayList<String>(Arrays.asList(mails.split("\n")));
         ArrayList<Message> result = new ArrayList<>();
         mailList.stream().map(str -> str.split(";")).filter(fields -> fields.length == 5).forEach(fields -> {

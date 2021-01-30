@@ -78,6 +78,9 @@ public class MailSystem {
     public int getTotalMessages(){
         int count = 0;
         for (User user: usersList) {
+            ArrayList<Message> aux = mailStore.getMail(user.getUsername());
+            if (aux == null)
+                continue;
             count+=mailStore.getMail(user.getUsername()).size();
         }
         return count;
@@ -106,6 +109,9 @@ public class MailSystem {
     public ArrayList<Message> getAllMessages(){
         ArrayList<Message> messages = new ArrayList<>();
         for (User user : usersList) {
+            ArrayList<Message> aux = mailStore.getMail(user.getUsername());
+            if (aux == null)
+                continue;
             messages.addAll(mailStore.getMail(user.getUsername()));
         }
         return messages;
@@ -156,7 +162,15 @@ public class MailSystem {
         Date date = formatter.parse(dateString);
         ArrayList<User> usersBefore = usersList.stream().filter(t->t.getBirthdate().before(date)).collect(Collectors.toCollection(ArrayList::new));
         ArrayList<Message> messagesBornBefore = new ArrayList<>();
-        usersBefore.stream().map(user -> mailStore.getMail(user.getUsername())).forEach(messagesBornBefore::addAll);
+        usersBefore.stream().map(user -> {
+            ArrayList<Message> aux = mailStore.getMail(user.getUsername());
+            if (aux == null)
+                new ArrayList<>();
+            return aux;
+        }).forEach(c -> {
+            if (c != null)
+                messagesBornBefore.addAll(c);
+        });
         return messagesBornBefore;
     }
 

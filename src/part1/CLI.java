@@ -1,6 +1,6 @@
 package part1;
 
-import part3.FileMailStoreFactory;
+import part3.FileWithWrappersFileMailStoreFactory;
 import part3.MemoryMailStoreFactory;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class CLI {
 
         }while (!"FfMm".contains(options));
         if (options.equalsIgnoreCase("f"))
-            cli.mailSystem = new MailSystem(new FileMailStoreFactory());
+            cli.mailSystem = new MailSystem(new FileWithWrappersFileMailStoreFactory());
         else
             cli.mailSystem = new MailSystem(new MemoryMailStoreFactory());
         keyboard.nextLine();

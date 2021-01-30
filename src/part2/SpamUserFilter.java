@@ -4,11 +4,12 @@ import part1.Message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class SpamUserFilter extends Observer{
     @Override
     public void update(ArrayList<Message> newValue, ArrayList<Message> spam) {
-        spam.addAll((Collection<? extends Message>) newValue.stream().filter(t->t.getFrom().contains("spam")));
-       newValue.removeAll((Collection<?extends Message>) newValue.stream().filter(t->t.getText().length()>20));
+        spam.addAll(newValue.stream().filter(message -> message.getFrom().contains("spam") || message.getFrom().contains("Spam")).collect(Collectors.toCollection(ArrayList::new)));
+        newValue.removeAll(newValue.stream().filter(message -> message.getFrom().contains("spam") || message.getFrom().contains("Spam")).collect(Collectors.toCollection(ArrayList::new)));
     }
 }

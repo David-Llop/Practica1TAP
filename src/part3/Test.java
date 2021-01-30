@@ -1,6 +1,8 @@
-package part1;
+package part3;
 
-import part3.MemoryMailStoreFactory;
+import part1.*;
+import part2.*;
+import part4.StoreUsingProxy;
 
 import java.text.ParseException;
 
@@ -10,18 +12,28 @@ public class Test
     public static void main (String[] Args) throws ParseException, NoSuchMethodException {
 
         //Initialize the mail system with an in-memory mail store.
-        MailSystem mailSystem = new MailSystem(new MemoryMailStoreFactory());
+        MailSystem mailSystem = new MailSystem(new RedisMailStoreFactory());
+        //mailSystem = new StoreUsingProxy();
 
         // Create at least 3 users, two have the same name but different username.
         User AnnaJu128 = new User("AnnaJu128", "Anna", User.formatter.parse("18-10-1999"));
         User Llop00 = new User("Llop00", "David", User.formatter.parse("07-11-2000"));
         User Buzzerage = new User("Buzzerage", "David", User.formatter.parse("01-01-2000"));
+        System.out.println("-------------------------------------------------------");
         System.out.println(mailSystem.addUser(AnnaJu128));
         System.out.println(mailSystem.addUser(Llop00));
         System.out.println(mailSystem.addUser(Buzzerage));
-        MailBox llopMailbox = mailSystem.retrieveMailBox(Llop00.getUsername());
-        MailBox annajuMailbox = mailSystem.retrieveMailBox(AnnaJu128.getUsername());
-        MailBox buzzerageMailbox = mailSystem.retrieveMailBox(Buzzerage.getUsername());
+        MailBoxSpam llopMailbox = new MailBoxSpam(mailSystem.retrieveMailBox(Llop00.getUsername()));
+        MailBoxSpam annajuMailbox = new MailBoxSpam(mailSystem.retrieveMailBox(AnnaJu128.getUsername()));
+        MailBoxSpam buzzerageMailbox = new MailBoxSpam(mailSystem.retrieveMailBox(Buzzerage.getUsername()));
+        System.out.println("-------------------------------------------------------");
+
+        llopMailbox.attach(new SpamUserFilter());
+        llopMailbox.attach(new TooLongUserFilter());
+
+        annajuMailbox.attach(new SpamUserFilter());
+
+        buzzerageMailbox.attach(new TooLongUserFilter());
 
         // Then, use the mailboxes to send a few emails between them. Make some of them share the
         // same subject and make enough so that the following tests have results.
@@ -51,6 +63,12 @@ public class Test
         buzzerageMailbox.sendMail(num10);
         Message num11 = new Message("AnnaJu128", "Buzzerage", "Ploro", "Patata, dons dema");
         annajuMailbox.sendMail(num11);
+        User spam = new User("AmazonSpam", "Spam", User.formatter.parse("01-02-1024"));
+        mailSystem.addUser(spam);
+        MailBox spamMailbox = mailSystem.retrieveMailBox(spam.getUsername());
+        spamMailbox.sendMail(new Message(spam.getUsername(), AnnaJu128.getUsername(), "asdohj", "a"));
+        spamMailbox.sendMail(new Message(spam.getUsername(), Llop00.getUsername(), "asdohj", "a"));
+        spamMailbox.sendMail(new Message(spam.getUsername(), Buzzerage.getUsername(), "asdohj", "a"));
 
         //Get one of the mailboxes and update its mail.
         llopMailbox.update();
@@ -58,31 +76,34 @@ public class Test
         //List the mailbox messages in the console. (Sorted by newer first.) Use the iterable capabilities
         //of the mailbox!
         llopMailbox.sort(new Sort.SortNewFirst()).forEach(System.out::println);
-
+        System.out.println("-------------------------------------------------------");
         //Now list the messages by sender username using the mailbox feature.
         llopMailbox.sort(new Sort.SortSenderAsc()).forEach(System.out::println);
-
+        System.out.println("-------------------------------------------------------");
         //Filter the messages with the following conditions:
         //The message subject contains a certain word.
-        llopMailbox.filter(new Filtrate.ContainsSubject("Cafe"));
+        llopMailbox.filter(new Filtrate.ContainsSubject("Cafe")).forEach(System.out::println);
         //The message sender is a certain user.
-        llopMailbox.filter(new Filtrate.SenderIs("AnnaJu128"));
-
+        System.out.println("-------------------------------------------------------");
+        llopMailbox.filter(new Filtrate.SenderIs("AnnaJu128")).forEach(System.out::println);
+        System.out.println("-------------------------------------------------------");
         //Use the mail system object to retrieve all messages and print them.
         mailSystem.getAllMessages().forEach(System.out::println);
 
         //Filter messages globally that fulfill the following conditions:
         //The message subject is a single word.
-        mailSystem.filtrate(m -> m.getSubject().split(" ").length<2);
+        System.out.println("-------------------------------------------------------");
+        mailSystem.filtrate(m -> m.getSubject().split(" ").length<2).forEach(System.out::println);
+        System.out.println("-------------------------------------------------------");
         //The sender was born after year 2000.
         mailSystem.fromBornBefore(2000).forEach(System.out::println);
-
+        System.out.println("-------------------------------------------------------");
         //Get the count of messages in the system and print it.
         System.out.println(mailSystem.getTotalMessages());
 
         //Get the average number of messages received per user and print it
         System.out.println(mailSystem.getAverageUserMessages());
-
+        System.out.println("-------------------------------------------------------");
         //Group the messages per subject in a Map<String, List<Message>> and print it.
         mailSystem.groupBySubject().forEach((s, messages) -> {
             System.out.println(s);
@@ -96,9 +117,30 @@ public class Test
         //Use the name that you used on two users. Print the result.
         //Print the messages received by users born before year 2000.
         mailSystem.toBornBefore(2000).forEach(System.out::println);
+        llopMailbox.update();
+        annajuMailbox.update();
+        buzzerageMailbox.update();
+        System.out.println("-------------------------------------------------------");
+        System.out.println("Spam");
+        llopMailbox.getSpam().forEach(System.out::println);
+        System.out.println("No Spam");
+        llopMailbox.getMailList().forEach(System.out::println);
+        System.out.println("-------------------------------------------------------");
+        System.out.println("Spam");
+        annajuMailbox.getSpam().forEach(System.out::println);
+        System.out.println("No Spam");
+        annajuMailbox.getMailList().forEach(System.out::println);
+        System.out.println("-------------------------------------------------------");
+        System.out.println("Spam");
+        buzzerageMailbox.getSpam().forEach(System.out::println);
+        System.out.println("No Spam");
+        buzzerageMailbox.getMailList().forEach(System.out::println);
 
 
         //Now change the mail store to the file implementation.
-        mailSystem.setMailStore(new OnFileMailStore("TestPart1.txt"));
+        mailSystem.setMailStore(new OnFileMailStore("TestPart3.txt"));
+        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart3Reverse.txt"), new ReverseEnripting()));
+        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart3Cipher.txt"), new CipherEncripter()));
+        mailSystem.setMailStore(new MailStoreEncode(new MailStoreEncode(new OnFileMailStore("TestPart3Reverse_Cipher.txt"), new CipherEncripter()), new ReverseEnripting()));
     }
 }
