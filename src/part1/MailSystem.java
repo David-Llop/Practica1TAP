@@ -137,7 +137,7 @@ public class MailSystem {
      * @return list of messages sent by users born before the given year
      * @throws ParseException as dd-mm-yyyy date format is used and only the year is given, it has to be parsed to Date
      */
-    public ArrayList<Message> toBornBefore(int year) throws ParseException {
+    public ArrayList<Message> fromBornBefore(int year) throws ParseException {
         String dateString = "01-01-"+year;
         Date date = formatter.parse(dateString);
         ArrayList<Message> messagesBornBefore = new ArrayList<>();
@@ -148,6 +148,15 @@ public class MailSystem {
         }
 
 
+        return messagesBornBefore;
+    }
+
+    public ArrayList<Message> toBornBefore(int year) throws ParseException {
+        String dateString = "01-01-"+year;
+        Date date = formatter.parse(dateString);
+        ArrayList<User> usersBefore = usersList.stream().filter(t->t.getBirthdate().before(date)).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Message> messagesBornBefore = new ArrayList<>();
+        usersBefore.stream().map(user -> mailStore.getMail(user.getUsername())).forEach(messagesBornBefore::addAll);
         return messagesBornBefore;
     }
 
