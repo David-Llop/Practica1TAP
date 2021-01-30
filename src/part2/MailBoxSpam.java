@@ -4,6 +4,11 @@ import part1.*;
 
 import java.util.*;
 
+/**
+ * Mail Box with listeners
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class MailBoxSpam  extends MailBox implements Iterable<Message> {
 
     private List<Observer> observers = new ArrayList<>();
@@ -17,6 +22,11 @@ public class MailBoxSpam  extends MailBox implements Iterable<Message> {
         super(mailBox.getMailStore(), mailBox.getUser());
     }
 
+
+    /**
+     * Updates the mail box and notifies the observers
+     */
+    @Override
     public void update(){
         messages = new ArrayList<>();
         spam = new ArrayList<>();

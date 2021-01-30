@@ -8,7 +8,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
-import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+/**
+ * This class implements a CLI program to use the Mail Service
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ * */
 
 public class CLI {
 
@@ -17,13 +23,16 @@ public class CLI {
     private MailBox currentMailBox;
     private MailSystem mailSystem;
 
-    private static void cleanScrean(CLI cli) throws IOException {
+    /**
+     * Program to clean the screen and prints the CLI header, only works in Windows
+     */
+    private static void cleanScreen(CLI cli) throws IOException {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(" AnnaJu-Llop mail client                                                                                        q: quit");
+        System.out.println(" AnnaJu-Llop Mail Service                                                                                       q: quit");
         if (cli.logged)
             System.out.println(" "+cli.currentUser.getUsername());
         else System.out.println();
@@ -31,7 +40,14 @@ public class CLI {
     }
 
 
-
+    /**
+     * Main function, basically a do ... while(not quit)
+     * @param args main ars
+     * @throws IOException thrown when unable to use the desired file as a mail store file
+     * @throws IOException thrown when unable to use the desired file as a mail store file
+     * @throws ParseException thrown when unable to parse from {@code String} to {@code int}
+     * @throws NoSuchMethodException thrown when unable to run windows command "cls"
+     */
     public static void main(String[] args) throws IOException, ParseException, NoSuchMethodException {
         Scanner keyboard = new Scanner(System.in);
         String options;
@@ -53,7 +69,7 @@ public class CLI {
         cli.mailSystem.addUser(AnnaJu128);
         cli.mailSystem.addUser(Llop00);
         do {
-            cleanScrean(cli);
+            cleanScreen(cli);
             options = keyboard.nextLine();
             if (!options.equalsIgnoreCase("q")) {
                 cli.decodeCommand(options.split(" "));
@@ -63,6 +79,11 @@ public class CLI {
         System.out.println("Closing mail system");
     }
 
+    /**
+     * This function calls the execution of the requested command, if it exists and is available
+     * @param command User input split by spaces
+     * @throws ParseException thrown when unable to parse from {@code String} to {@code int}
+     */
     public void decodeCommand(String[] command) throws ParseException {
         if (logged) {
             switch (command[0]){
@@ -104,6 +125,11 @@ public class CLI {
         System.out.println("Press enter to enter a new command");
     }
 
+    /**
+     * Creates user and adds it to the Mail System
+     * @param command command given by the user
+     * @throws ParseException thrown when unable to parse from {@code String} to {@code int}
+     */
     private void createUser(String[] command) throws ParseException {
         if (command.length>4){
             System.out.println("Too many arguments");
@@ -113,14 +139,17 @@ public class CLI {
             System.out.println("Missing arguments");
             return;
         }
-        if (mailSystem.findUser(command[1])!= null){
-            System.out.println("Username in use");
+        if (mailSystem.addUser(new User(command[1], command[2], User.formatter.parse(command[3])))){
+            System.out.println("User created and added");
             return;
         }
-        mailSystem.addUser(new User(command[1], command[2], User.formatter.parse(command[3])));
-        System.out.println("User created and added");
+        System.out.println("Username in use");
     }
 
+    /**
+     * Sends a mail
+     * @param command command given by the user
+     */
     private void sendMail(String[] command) {
         if (command.length < 4){
             System.out.println("Missing arguments");
@@ -136,6 +165,10 @@ public class CLI {
         System.out.println("Mail sent");
     }
 
+    /**
+     * Sorts and shows the messages in the mailbox
+     * @param command command given by the user
+     */
     private void sort(String[] command) {
         if (command.length > 3) {
             System.out.println("Too many parameters");
@@ -170,8 +203,11 @@ public class CLI {
 
     }
 
+    /**
+     * Filters and shows the mails in the mailbox
+     * @param command command given by the user
+     */
     private void filter(String[] command) {
-        System.out.println("asdhjfjkasdhfjhasd");
         if (command.length>5){
             System.out.println("Too many arguments");
             return;
@@ -193,10 +229,10 @@ public class CLI {
         else
             aux= mailSystem.getAllMessages();
         if (command[1].equals("contains")){
-            result = Filtrate.filter(new Filtrate.ContainsPredicate(command[2]), aux);
+            result = aux.stream().filter(new Filtrate.ContainsPredicate(command[2])).collect(Collectors.toCollection(ArrayList::new));
         }
         if (command[1].equals("lessthan")){
-            result = Filtrate.filter(new Filtrate.LessThanPredicate(Integer.parseInt(command[2])), aux);
+            result = aux.stream().filter(new Filtrate.LessThanPredicate(Integer.parseInt(command[2]))).collect(Collectors.toCollection(ArrayList::new));
         }
         if (command.length==3){
             System.out.println("Resultats de la cerca:");
@@ -205,15 +241,20 @@ public class CLI {
         }
         aux = result;
         if (command[3].equals("contains")){
-            result = Filtrate.filter(new Filtrate.ContainsPredicate(command[4]), aux);
+            result = aux.stream().filter(new Filtrate.ContainsPredicate(command[4])).collect(Collectors.toCollection(ArrayList::new));
         }
         if (command[3].equals("lessthan")){
-            result = Filtrate.filter(new Filtrate.LessThanPredicate(Integer.parseInt(command[4])), aux);
+            result = aux.stream().filter(new Filtrate.LessThanPredicate(Integer.parseInt(command[4]))).collect(Collectors.toCollection(ArrayList::new));
         }
         System.out.println("Resultats de la cerca:");
         System.out.println(result);
     }
 
+
+    /**
+     * Allows the user to log as a user and access its mailbox.
+     * @param command command given by the user
+     */
     private void login(String[] command) {
         if (command.length > 2) {
             System.out.println("Too many arguments");

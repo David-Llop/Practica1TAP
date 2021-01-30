@@ -137,8 +137,8 @@ public class Test
 
         //Now change the mail store to the file implementation.
         mailSystem.setMailStore(new OnFileMailStore("TestPart2.txt"));
-        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart2Reverse.txt"), new ReverseEnripting()));
-        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart2Cipher.txt"), new CipherEncripter()));
-        mailSystem.setMailStore(new MailStoreEncode(new MailStoreEncode(new OnFileMailStore("TestPart2Reverse_Cipher.txt"), new CipherEncripter()), new ReverseEnripting()));
+        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart2Reverse.txt"), new ReverseEncrypting()));
+        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart2Cipher.txt"), new CipherEncryptor()));
+        mailSystem.setMailStore(new MailStoreEncode(new MailStoreEncode(new OnFileMailStore("TestPart2Reverse_Cipher.txt"), new CipherEncryptor()), new ReverseEncrypting()));
     }
 }

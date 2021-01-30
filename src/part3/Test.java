@@ -2,7 +2,6 @@ package part3;
 
 import part1.*;
 import part2.*;
-import part4.StoreUsingProxy;
 
 import java.text.ParseException;
 
@@ -139,8 +138,8 @@ public class Test
 
         //Now change the mail store to the file implementation.
         mailSystem.setMailStore(new OnFileMailStore("TestPart3.txt"));
-        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart3Reverse.txt"), new ReverseEnripting()));
-        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart3Cipher.txt"), new CipherEncripter()));
-        mailSystem.setMailStore(new MailStoreEncode(new MailStoreEncode(new OnFileMailStore("TestPart3Reverse_Cipher.txt"), new CipherEncripter()), new ReverseEnripting()));
+        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart3Reverse.txt"), new ReverseEncrypting()));
+        mailSystem.setMailStore(new MailStoreEncode(new OnFileMailStore("TestPart3Cipher.txt"), new CipherEncryptor()));
+        mailSystem.setMailStore(new MailStoreEncode(new MailStoreEncode(new OnFileMailStore("TestPart3Reverse_Cipher.txt"), new CipherEncryptor()), new ReverseEncrypting()));
     }
 }

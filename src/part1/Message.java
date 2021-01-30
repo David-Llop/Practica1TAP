@@ -3,6 +3,11 @@ package part1;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class implementing a message or mail
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class Message {
 
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");

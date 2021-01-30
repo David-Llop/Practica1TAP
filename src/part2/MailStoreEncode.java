@@ -6,12 +6,16 @@ import part1.User;
 
 import java.util.ArrayList;
 
+/**
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class MailStoreEncode implements IMailStore {
 
     IMailStore mailStore;
-    Strategy encodingStrategy;
+    IStrategy encodingStrategy;
 
-    public MailStoreEncode(IMailStore mailStore, Strategy encodingStrategy) {
+    public MailStoreEncode(IMailStore mailStore, IStrategy encodingStrategy) {
         this.mailStore = mailStore;
         this.encodingStrategy = encodingStrategy;
     }

@@ -3,6 +3,11 @@ package part1;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class implementing the user functionalities
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class User{
     private String username, name;
     private Date birthdate;

@@ -10,23 +10,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class JedisAddapter implements IMailStore {
+/**
+ * Adapts the jedis client to a Mail store. As only one jedis client is allowed, it follows the Singleton pattern
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
+public class JedisAdapter implements IMailStore {
 
-    private static JedisAddapter jedisAddapter = new JedisAddapter();
+    private static JedisAdapter jedisAdapter = new JedisAdapter();
     private Jedis jedisClient = new Jedis("localhost");
 
-    private JedisAddapter() {
+    private JedisAdapter() {
     }
 
-    public static JedisAddapter getInstance() {
-        return jedisAddapter;
+    public static JedisAdapter getInstance() {
+        return jedisAdapter;
     }
 
+    /**
+     * Function that sends a given Message
+     * @param mail {@link Message} to be send
+     */
     @Override
     public void sendMail(Message mail) {
         jedisClient.append(mail.getTo(), mail.toString()+"\n");
     }
 
+    /**
+     * Function that, given a user, returns the Array list of messages intended for it
+     * @param user user for whom the mails are intended
+     * @return Array list of mails intended for the given user
+     */
     @Override
     public ArrayList<Message> getMail(String user) {
         String mails = jedisClient.get(user);

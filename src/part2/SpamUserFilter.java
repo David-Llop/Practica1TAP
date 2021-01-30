@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * Observer that filters the messages whose sender's username contains "spam" or "Spam" and moves them to the spam list
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class SpamUserFilter extends Observer{
     @Override
     public void update(ArrayList<Message> newValue, ArrayList<Message> spam) {

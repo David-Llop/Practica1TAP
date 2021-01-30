@@ -1,7 +1,6 @@
 package part1;
 
 import part3.IMailStoreFactory;
-import part4.Config;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +10,8 @@ import java.util.stream.Collectors;
 
 /**
  * Class with the Mail System functions
+ * @author David Llop Roig
+ * @author Anna Julia Naval
  */
 public class MailSystem {
 
@@ -20,7 +21,7 @@ public class MailSystem {
 
 
     public MailSystem(IMailStoreFactory mailStoreFactory) throws NoSuchMethodException {
-        mailStore = mailStoreFactory.createMailstore();
+        mailStore = mailStoreFactory.createMailStore();
     }
 
     public MailSystem(IMailStore mailStore) {
@@ -31,6 +32,10 @@ public class MailSystem {
         return mailStore;
     }
 
+    /**
+     * Changes System's mailstore
+     * @param mailStore new mailstore
+     */
     public void setMailStore(IMailStore mailStore) {
         if (this.mailStore == null) {
             this.mailStore = mailStore;
@@ -43,6 +48,11 @@ public class MailSystem {
         this.mailStore = mailStore;
     }
 
+    /**
+     * function that finds a user by username by its username
+     * @param username user to find
+     * @return reference to the user if found, {@code null} otherwise
+     */
     public User findUser(String username){
         for (User user :
                 usersList) {
@@ -55,7 +65,7 @@ public class MailSystem {
     /**
      * Function to add a user
      * @param user user to add or login
-     * @return Mailbox with the user messages
+     * @return {@code true} if added, {@code false} otherwise
      */
     public boolean addUser(User user){
         if (usersList.stream().filter(user1 -> user1.getUsername().equals(user.getUsername())).collect(Collectors.toCollection(ArrayList::new)).size() == 0){
@@ -65,6 +75,11 @@ public class MailSystem {
         return false;
     }
 
+    /**
+     * Function to retrieve the mailbox of the given user
+     * @param username owner of the mailbox to retrieve
+     * @return mailbox of the given user
+     */
     public MailBox retrieveMailBox(String username){
         if (usersList.stream().filter(user1 -> user1.getUsername().equals(username)).collect(Collectors.toCollection(ArrayList::new)).size() == 0)
             return null;
@@ -139,7 +154,7 @@ public class MailSystem {
 
     /**
      * Function to get all the messages sent by users born before the given year
-     * @param year Year before which the receiver must have been born
+     * @param year Year before which the sender must have been born
      * @return list of messages sent by users born before the given year
      * @throws ParseException as dd-mm-yyyy date format is used and only the year is given, it has to be parsed to Date
      */
@@ -157,6 +172,12 @@ public class MailSystem {
         return messagesBornBefore;
     }
 
+    /**
+     * Function to get all the messages sent to users born before the given year
+     * @param year Year before which the receiver must have been born
+     * @return list of messages sent to users born before the given year
+     * @throws ParseException as dd-mm-yyyy date format is used and only the year is given, it has to be parsed to Date
+     */
     public ArrayList<Message> toBornBefore(int year) throws ParseException {
         String dateString = "01-01-"+year;
         Date date = formatter.parse(dateString);
@@ -180,6 +201,6 @@ public class MailSystem {
      * @return List of messages with less than the given words in the body
      */
     public ArrayList<Message> filtrate(Predicate<Message> predicate){
-        return Filtrate.filter(predicate, getAllMessages());
+        return getAllMessages().stream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
     }
 }

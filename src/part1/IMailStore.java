@@ -2,6 +2,11 @@ package part1;
 
 import java.util.ArrayList;
 
+/**
+ * Interface containing the definition of the basic functions of a MailStore
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public interface IMailStore {
 
     /**
@@ -11,9 +16,9 @@ public interface IMailStore {
     void sendMail(Message mail);
 
     /**
-     * Function that, given a {@link User}, returns the {@link ArrayList}<{@link Message}> intended for it
-     * @param user {@link User} for whom the mails are intended
-     * @return {@link ArrayList}<{@link Message}> of mails intended for the given user
+     * Function that, given a user, returns the Array list of messages intended for it
+     * @param user user for whom the mails are intended
+     * @return Array list of mails intended for the given user
      */
     ArrayList<Message> getMail(String user);
 

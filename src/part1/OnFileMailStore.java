@@ -7,6 +7,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Class implementing a File mail store
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class OnFileMailStore implements IMailStore{
 
     private File file;
@@ -59,9 +64,9 @@ public class OnFileMailStore implements IMailStore{
     }
 
     /**
-     * Function that, given a {@link User}, returns the {@link Message} [] intended for it
-     * @param user {@link User} for whom the mails are intended
-     * @return {@link Message} [] of mails intended for the given user
+     * Function that, given a user, returns the Array list of messages intended for it
+     * @param user user for whom the mails are intended
+     * @return Array list of mails intended for the given user
      */
     @Override
     public ArrayList<Message> getMail(String user) {

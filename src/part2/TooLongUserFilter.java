@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * Observer that filters the messages with more than 20 characters in the body and moves them to the spam list
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
 public class TooLongUserFilter extends Observer{
     @Override
     public void update(ArrayList<Message> newValue, ArrayList<Message> spam) {

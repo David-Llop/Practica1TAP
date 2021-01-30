@@ -5,7 +5,12 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-public class CipherEncripter implements Strategy{
+/**
+ * Class implementing a Cipher Encryptor
+ * @author David Llop Roig
+ * @author Anna Julia Naval
+ */
+public class CipherEncryptor implements IStrategy {
 
     String key = "IWantToPassTAP12"; // 128 bit key
     java.security.Key aesKey =
@@ -22,6 +27,12 @@ public class CipherEncripter implements Strategy{
         }
     }
 
+    /**
+     * Given a string, returns it encoded
+     * @param message message to encode
+     * @return message encoded
+     */
+
     @Override
     public String encode(String message) {
         byte[] encrypted = new byte[0];
@@ -34,6 +45,11 @@ public class CipherEncripter implements Strategy{
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
+    /**
+     * Given an encoded string, decodes it
+     * @param message encoded message
+     * @return decoded message
+     */
     @Override
     public String decode(String message) {
         byte[] encrypted = Base64.getDecoder().decode(message.getBytes());
