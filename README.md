@@ -1,7 +1,7 @@
 # Practica1TAP
 
 This is a University Project for the Tècniques Avançades de Programació (Advanced Programming Technics) subject from Universitat Rovira i Virgili.
-It implements a Mail System.
+It implements a Mail Service.
 
 # Disclaimer
 
