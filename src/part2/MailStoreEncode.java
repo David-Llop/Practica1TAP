@@ -7,6 +7,7 @@ import part1.User;
 import java.util.ArrayList;
 
 /**
+ * Mail store decorator to encore the mail store with the given Strategy
  * @author David Llop Roig
  * @author Anna Julia Naval
  */
@@ -21,7 +22,7 @@ public class MailStoreEncode implements IMailStore {
     }
 
     /**
-     * Function that sends a given Message
+     * Function that encodes and sends a given Message
      *
      * @param mail {@link Message} to be send
      */
@@ -32,10 +33,10 @@ public class MailStoreEncode implements IMailStore {
     }
 
     /**
-     * Function that, given a {@link User}, returns the {@link Message} [] intended for it
+     * Function that, given a {@link User}, returns the array list of messages intended for it and decodes them
      *
      * @param user {@link User} for whom the mails are intended
-     * @return {@link Message} [] of mails intended for the given user
+     * @return Array list of decoded mails intended for the given user
      */
     @Override
     public ArrayList<Message> getMail(String user) {

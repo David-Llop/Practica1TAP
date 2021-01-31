@@ -75,6 +75,10 @@ public class Message {
         return from + ";" + to + ";" + subject + ";" + text +";" + formatter.format(sendDate) + "\n";
     }
 
+    /**
+     * Calculates how many words has the message's body
+     * @return Number of words in the message's body
+     */
     public int getWordCount(){
         return text.split(" ").length;
     }
